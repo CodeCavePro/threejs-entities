@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using Autodesk.Revit.DB;
 using Newtonsoft.Json;
 
-namespace CodeCave.Revit.Threejs.Exporter.Geometries
+namespace CodeCave.Threejs.Entities
 {
     /// <summary>
     /// Geometry is a user-friendly alternative to BufferGeometry.
@@ -17,53 +17,40 @@ namespace CodeCave.Revit.Threejs.Exporter.Geometries
     [DataContract]
     public class Geometry
     {
+        /// <summary>Gets the type of this object, it always equals 'Geometry'.</summary>
+        /// <value>The 'Geometry' type.</value>
+        [DataMember(Name = "type")]
+        [JsonProperty("type")]
+        public const string Type = nameof(Geometry);
+
         /// <summary>
-        /// Gets the UUID of this object instance.
+        /// Gets or sets the UUID of this object instance.
         /// </summary>
         /// <value>
-        /// The UUID. This gets automatically assigned and shouldn't be edited. 
+        /// The UUID. This gets automatically assigned and shouldn't be edited.
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
-        public string Uuid { get; internal set; } = Guid.Empty.ToString();
+        public string Uuid { get; set; } = Guid.NewGuid().ToString();
 
-        [DataMember(Name = "type" )]
-        [JsonProperty("type")]
-        public string Type => nameof(Geometry);
-
-        [DataMember(Name = "materials" )]
-        [JsonProperty("materials")]
-        public ICollection<Material> Materials { get; internal set; } = new List<Material>();
-
-        [DataMember(Name = "data" )]
+        [DataMember(Name = "data")]
         [JsonProperty("data")]
-        public GeometryData Data { get; internal set; } = new GeometryData();
+        private GeometryData Data { get; } = new GeometryData();
 
+        // TODO implement morphTargets[]
+        // TODO implement morphNormals[]
         [DataContract]
-        public class GeometryData
+        private class GeometryData
         {
-            // TODO implement morphTargets[]
-            // TODO implement morphNormals[]
-
             /// <summary>
-            /// Gets or sets the array of vertices (in millimeters).
+            /// Gets or sets a value indicating whether [casts shadow].
             /// </summary>
             /// <value>
-            /// The array of vertices holds the position of every vertex in the model.
+            ///   <c>true</c> if [casts shadow]; otherwise, <c>false</c>.
             /// </value>
-            [DataMember(Name = "vertices")]
-            [JsonProperty("vertices")]
-            public ICollection<double> Vertices { get; set; } = new List<double>();
-
-            /// <summary>
-            /// Gets or sets the normals.
-            /// </summary>
-            /// <value>
-            /// The normals.
-            /// </value>
-            [DataMember(Name = "normals")]
-            [JsonProperty("normals")]
-            public ICollection<double> Normals { get; set; } = new List<double>();
+            [DataMember(Name = "castShadow")]
+            [JsonProperty("castShadow")]
+            public bool CastShadow { get; set; } = true;
 
             /// <summary>
             /// Gets or sets the array of vertex colors, matching number and order of vertices.
@@ -76,15 +63,14 @@ namespace CodeCave.Revit.Threejs.Exporter.Geometries
             public ICollection<int> Colors { get; set; } = new List<int>();
 
             /// <summary>
-            /// Gets or sets the array of face UV layers, used for mapping textures onto the geometry.
-            /// Each UV layer is an array of UVs matching the order and number of vertices in faces.
+            /// Gets or sets a value indicating whether [is double sided].
             /// </summary>
             /// <value>
-            /// The array of face UV layers, used for mapping textures onto the geometry.
+            ///   <c>true</c> if [is double sided]; otherwise, <c>false</c>.
             /// </value>
-            [DataMember(Name = "uvs")]
-            [JsonProperty("uvs")]
-            public ICollection<double> UVs { get; set; } = new List<double>();
+            [DataMember(Name = "doubleSided")]
+            [JsonProperty("doubleSided")]
+            public bool DoubleSided { get; set; } = true;
 
             /// <summary>
             /// Gets or sets the array of faces.
@@ -99,6 +85,27 @@ namespace CodeCave.Revit.Threejs.Exporter.Geometries
             public List<int> Faces { get; set; } = new List<int>();
 
             /// <summary>
+            /// Gets or sets the normals.
+            /// </summary>
+            /// <value>
+            /// The normals.
+            /// </value>
+            [DataMember(Name = "normals")]
+            [JsonProperty("normals")]
+            public ICollection<double> Normals { get; set; } = new List<double>();
+
+            /// <summary>
+            /// Gets or sets a value indicating whether [receives shadow].
+            /// </summary>
+            /// <value>
+            ///   <c>true</c> if [receives shadow]; otherwise, <c>false</c>.
+            /// </value>
+            /// ReSharper disable once RedundantDefaultMemberInitializer
+            [DataMember(Name = "receiveShadow")]
+            [JsonProperty("receiveShadow")]
+            public bool ReceiveShadow { get; set; } = false;
+
+            /// <summary>
             /// Gets or sets the scale of the geometry data.
             /// Scaling is typically done as a one time operation but not during the render loop.
             /// </summary>
@@ -110,6 +117,27 @@ namespace CodeCave.Revit.Threejs.Exporter.Geometries
             public double Scale { get; set; } = 1.0D;
 
             /// <summary>
+            /// Gets or sets the array of face UV layers, used for mapping textures onto the geometry.
+            /// Each UV layer is an array of UVs matching the order and number of vertices in faces.
+            /// </summary>
+            /// <value>
+            /// The array of face UV layers, used for mapping textures onto the geometry.
+            /// </value>
+            [DataMember(Name = "uvs")]
+            [JsonProperty("uvs")]
+            public ICollection<double> UVs { get; set; } = new List<double>();
+
+            /// <summary>
+            /// Gets or sets the array of vertices (in millimeters).
+            /// </summary>
+            /// <value>
+            /// The array of vertices holds the position of every vertex in the model.
+            /// </value>
+            [DataMember(Name = "vertices")]
+            [JsonProperty("vertices")]
+            public ICollection<double> Vertices { get; set; } = new List<double>();
+
+            /// <summary>
             /// Gets or sets a value indicating whether this <see cref="GeometryData"/> is visible.
             /// </summary>
             /// <value>
@@ -118,37 +146,27 @@ namespace CodeCave.Revit.Threejs.Exporter.Geometries
             [DataMember(Name = "visible")]
             [JsonProperty("visible")]
             public bool Visible { get; set; } = true;
+        }
 
-            /// <summary>
-            /// Gets or sets a value indicating whether [casts shadow].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [casts shadow]; otherwise, <c>false</c>.
-            /// </value>
-            [DataMember(Name = "castShadow")]
-            [JsonProperty("castShadow")]
-            public bool CastShadow { get; set; } = true;
+        /// <summary>Gets the materials of this <see cref="Geometry"/> instance.</summary>
+        /// <value>The materials.</value>
+        [DataMember(Name = "materials")]
+        [JsonProperty("materials")]
+        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "The class above is private.")]
+        public ICollection<Material> Materials { get; internal set; } = new List<Material>();
 
-            /// <summary>
-            /// Gets or sets a value indicating whether [receives shadow].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [receives shadow]; otherwise, <c>false</c>.
-            /// </value>
-            [DataMember(Name = "receiveShadow")]
-            [JsonProperty("receiveShadow")]
-            // ReSharper disable once RedundantDefaultMemberInitializer
-            public bool ReceiveShadow { get; set; } = false;
+        /// <summary>Adds the vertice.</summary>
+        /// <param name="vertice">The vertice.</param>
+        public void AddVertice(long vertice)
+        {
+            Data.Vertices.Add(vertice);
+        }
 
-            /// <summary>
-            /// Gets or sets a value indicating whether [is double sided].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [is double sided]; otherwise, <c>false</c>.
-            /// </value>
-            [DataMember(Name = "doubleSided")]
-            [JsonProperty("doubleSided")]
-            public bool DoubleSided { get; set; } = true;
+        /// <summary>Adds the faces.</summary>
+        /// <param name="faces">The faces.</param>
+        public void AddFaces(params int[] faces)
+        {
+            Data.Faces.AddRange(faces);
         }
     }
 }

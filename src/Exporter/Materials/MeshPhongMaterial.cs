@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace CodeCave.Revit.Threejs.Exporter.Materials
+namespace CodeCave.Threejs.Entities
 {
     /// <summary>
     /// A material for shiny surfaces with specular highlights.
@@ -11,18 +11,18 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
     /// This calculates shading per pixel (i.e. in the fragment shader, AKA pixel shader)
     /// which gives more accurate results than the Gouraud model used by MeshLambertMaterial,
     /// at the cost of some performance. The MeshStandardMaterial and MeshPhysicalMaterial also use this shading model.
-    /// Performance will generally be greater when using this material over the MeshStandardMaterial or MeshPhysicalMaterial, at the cost of some graphical accuracy. 
+    /// Performance will generally be greater when using this material over the MeshStandardMaterial or MeshPhysicalMaterial, at the cost of some graphical accuracy.
     /// </summary>
+    /// ReSharper disable once InheritdocConsiderUsage
     [DataContract]
-    // ReSharper disable once InheritdocConsiderUsage
     public class MeshPhongMaterial : Material
     {
         /// <summary>
-        /// The type of the material
+        /// Gets the type of the material.
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
-        public override string Type => "MeshPhongMaterial";
+        public override string Type => nameof(MeshPhongMaterial);
 
         /// <summary>
         /// Gets or sets the color of the material, by default set to white (0xffffff).
@@ -46,7 +46,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
 
         /// <summary>
         /// Gets or sets the emissive (light) color of the material,
-        /// essentially a solid color unaffected by other lighting. Default is black. 
+        /// essentially a solid color unaffected by other lighting. Default is black.
         /// </summary>
         /// <value>
         /// The emissive (light) color of the material.
@@ -57,7 +57,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
 
         /// <summary>
         /// Gets or sets the specular color of the material. Default is a Color set to 0x111111 (very dark grey).
-        /// This defines how shiny the material is and the color of its shine. 
+        /// This defines how shiny the material is and the color of its shine.
         /// </summary>
         /// <value>
         /// The specular color of the material.

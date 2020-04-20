@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCave.Threejs.Entities", "src\Exporter\CodeCave.Threejs.Entities.csproj", "{7185864D-B83E-44A8-8FDC-9F2136296E1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D6689EB-2EEF-4816-9196-65FECFBEF288}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		azure-pipelines.yml = azure-pipelines.yml
+		CodeAnalysis.ruleset = CodeAnalysis.ruleset
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		LICENSE = LICENSE
+		NuGet.config = NuGet.config
+		README.md = README.md
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7185864D-B83E-44A8-8FDC-9F2136296E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7185864D-B83E-44A8-8FDC-9F2136296E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7185864D-B83E-44A8-8FDC-9F2136296E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7185864D-B83E-44A8-8FDC-9F2136296E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93606F04-2C80-4228-B2BB-9DD6538D894B}
+	EndGlobalSection
+EndGlobal

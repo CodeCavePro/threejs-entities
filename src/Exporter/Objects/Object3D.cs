@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace CodeCave.Revit.Threejs.Exporter.Objects
+namespace CodeCave.Threejs.Entities
 {
     /// <summary>
     /// This is the base class for most objects in three.js
@@ -12,37 +11,42 @@ namespace CodeCave.Revit.Threejs.Exporter.Objects
     /// Note that this can be used for grouping objects via the .add( object ) method
     /// which adds the object as a child, however it is better to use Group for this.
     /// </summary>
+    // TODO implement: List<double> scale
+    // TODO implement: List<double> position
+    // TODO implement: List<double> rotation
+    // TODO implement: List<double> quaternion
     [DataContract]
     public class Object3D
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Object3D"/> class.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <exception cref="T:System.ArgumentException">Value cannot be null or whitespace. - type</exception>
+        private readonly IDictionary<string, Object3D> children;
+
+        /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
+        /// <param name="type">The type of the object.</param>
+        /// <param name="uuid">The unique identified of the object.</param>
+        /// <exception cref="ArgumentException">Value cannot be null or whitespace. - type.</exception>
         [JsonConstructor]
-        public Object3D(string type)
+        public Object3D(string type = nameof(Object3D), string uuid = null)
         {
-            Type = (string.IsNullOrWhiteSpace(type))
-                ? "Object3D"
-                : type;
-            childrenInternal = new Dictionary<string, Object3D>();
+            children = new Dictionary<string, Object3D>();
             UserData = new Dictionary<string, string>();
+            Uuid = uuid ?? Guid.NewGuid().ToString();
+            Type = string.IsNullOrWhiteSpace(type)
+                ? nameof(Object3D)
+                : type;
         }
 
         /// <summary>
         /// Gets the UUID of this object instance.
         /// </summary>
         /// <value>
-        /// The UUID. This gets automatically assigned and shouldn't be edited. 
+        /// The UUID. This gets automatically assigned and shouldn't be edited.
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
-        public string Uuid { get; set; }
+        public string Uuid { get; private set; }
 
         /// <summary>
         /// Gets or sets the optional name of the object (doesn't need to be unique).
-        /// Default is an empty string.
         /// </summary>
         /// <value>
         /// The optional name of the object.
@@ -52,7 +56,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Objects
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets the type of the object.
+        /// Gets the type of the object (e.g. Object3D).
         /// </summary>
         /// <value>
         /// The type of the object.
@@ -62,30 +66,30 @@ namespace CodeCave.Revit.Threejs.Exporter.Objects
         public string Type { get; }
 
         /// <summary>
-        /// Gets or sets the local transform matrix.
+        /// Gets the local transform matrix.
         /// </summary>
         /// <value>
         /// The local transform matrix.
         /// </value>
         [DataMember(Name = "matrix")]
         [JsonProperty("matrix")]
-        public double[] Matrix { get; set; } =
+        public ICollection<double> Matrix { get; private set; } = new[]
         {
-            1D,0D,0D,0D,
-            0D,1D,0D,0D,
-            0D,0D,1D,0D,
-            0D,0D,0D,1D
+            1D, 0D, 0D, 0D,
+            0D, 1D, 0D, 0D,
+            0D, 0D, 1D, 0D,
+            0D, 0D, 0D, 1D,
         };
 
         /// <summary>
-        /// Gets or sets the array of object's children.
+        /// Gets the array of object's children.
         /// </summary>
         /// <value>
         /// The array of object's children.
         /// </value>
-        [DataMember(Name = "children")]
-        [JsonProperty("children")]
-        public IReadOnlyCollection<Object3D> Children => childrenInternal.Values.ToArray();
+        [DataMember(Name = nameof(children))]
+        [JsonProperty(nameof(children))]
+        public IReadOnlyCollection<Object3D> Children => (IReadOnlyCollection<Object3D>)children.Values;
 
         /// <summary>
         /// Gets or sets the ID of the geometry.
@@ -119,7 +123,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Objects
         public IDictionary<string, string> UserData { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Geometries.Geometry.GeometryData"/> is visible.
+        /// Gets or sets a value indicating whether this <see cref="Geometry.GeometryData"/> is visible.
         /// </summary>
         /// <value>
         ///   <c>true</c> if visible; otherwise, <c>false</c>.
@@ -144,31 +148,30 @@ namespace CodeCave.Revit.Threejs.Exporter.Objects
         /// <value>
         ///   <c>true</c> if [receives shadow]; otherwise, <c>false</c>.
         /// </value>
+        /// ReSharper disable once RedundantDefaultMemberInitializer
         [DataMember(Name = "receiveShadow")]
         [JsonProperty("receiveShadow")]
-        // ReSharper disable once RedundantDefaultMemberInitializer
         public bool ReceiveShadow { get; set; } = false;
 
-        // TODO implement: List<double> position { get; set; }
-        // TODO implement: List<double> rotation { get; set; }
-        // TODO implement: List<double> quaternion { get; set; }
-        // TODO implement: List<double> scale { get; set; }
-
-        [JsonIgnore]
-        [IgnoreDataMember]
-        protected IDictionary<string, Object3D> childrenInternal { get; }
-
-        internal void AddChildren(Object3D object3D)
+        /// <summary>Adds the child.</summary>
+        /// <param name="object3D">An <see cref="Object3D"/> instance to be added as a child.</param>
+        /// <exception cref="ArgumentNullException">Provide a valid Object3D instance.</exception>
+        public void AddChild(Object3D object3D)
         {
-            if (object3D == null) throw new ArgumentNullException(nameof(object3D));
+            if (object3D is null)
+                throw new ArgumentNullException(nameof(object3D), "Provide a valid Object3D instance.");
 
-            if (!childrenInternal.ContainsKey(object3D.Uuid))
-                childrenInternal.Add(object3D.Uuid, object3D);
+            if (!children.ContainsKey(object3D.Uuid))
+                children.Add(object3D.Uuid, object3D);
         }
 
-        internal bool HasChildren(string uuid)
+        /// <summary>Determines whether this object has a child with given UUID.</summary>
+        /// <param name="uuid">The UUID of the child object.</param>
+        /// <returns>
+        ///   <c>true</c> if thethis object contains has a child with given UUID; otherwise, <c>false</c>.</returns>
+        public bool HasChild(string uuid)
         {
-            return childrenInternal.ContainsKey(uuid);
+            return children.ContainsKey(uuid);
         }
     }
 }

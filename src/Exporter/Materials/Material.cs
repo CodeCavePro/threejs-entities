@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace CodeCave.Revit.Threejs.Exporter.Materials
+namespace CodeCave.Threejs.Entities
 {
     /// <summary>
     /// Abstract base class for materials.
@@ -9,16 +9,16 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
     /// They are defined in a (mostly) renderer-independent way
     /// so you don't have to rewrite materials if you decide to use a different renderer.
     /// The following properties and methods are inherited by all other material types
-    /// (although they may have different defaults). 
+    /// (although they may have different defaults).
     /// </summary>
     [DataContract]
     public abstract class Material
     {
         /// <summary>
-        /// Gets the UUID of this object instance.
+        /// Gets or sets the UUID of this object instance.
         /// </summary>
         /// <value>
-        /// The UUID. This gets automatically assigned and shouldn't be edited. 
+        /// The UUID. This gets automatically assigned and shouldn't be edited.
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
@@ -40,7 +40,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
         /// Float in the range of 0.0 - 1.0 indicating how transparent the material is.
         /// A value of 0.0 indicates fully transparent, 1.0 is fully opaque.
         /// If the material's transparent property is not set to true,
-        /// the material will remain fully opaque and this value will only affect its color. 
+        /// the material will remain fully opaque and this value will only affect its color.
         /// </summary>
         /// <value>
         /// The opacity of the material.
@@ -48,7 +48,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
         [DataMember(Name = "opacity")]
         [JsonProperty("opacity")]
         public double Opacity { get; set; } = 1;
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Material"/> is transparent.
         /// Defines whether this material is transparent.
@@ -63,7 +63,7 @@ namespace CodeCave.Revit.Threejs.Exporter.Materials
         public bool Transparent { get; set; }
 
         /// <summary>
-        /// The type of the material
+        /// Gets the type of the material.
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]

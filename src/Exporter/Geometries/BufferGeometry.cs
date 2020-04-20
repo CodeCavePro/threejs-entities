@@ -1,4 +1,4 @@
-﻿namespace CodeCave.Revit.Threejs.Exporter.Geometries
+namespace CodeCave.Threejs.Entities
 {
     /// <summary>
     /// An efficient representation of mesh, line, or point geometry.
@@ -6,7 +6,7 @@
     /// and custom attributes within buffers, reducing the cost of passing all this data to the GPU.
     /// To read and edit data in BufferGeometry attributes, see BufferAttribute documentation.
     ///
-    /// For a less efficient but easier-to-use representation of geometry, see <see cref="Geometry"/>. 
+    /// For a less efficient but easier-to-use representation of geometry, see <see cref="Geometry"/>.
     /// </summary>
     public class BufferGeometry
     {
