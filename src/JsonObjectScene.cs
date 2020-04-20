@@ -100,10 +100,23 @@ namespace CodeCave.Threejs.Entities
                 materials.Add(material.Uuid, material);
         }
 
+        /// <summary>Determines whether the specified UUID has material.</summary>
+        /// <param name="uuid">The UUID.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified UUID has material; otherwise, <c>false</c>.</returns>
         public bool HasMaterial(string uuid)
         {
             return materials.ContainsKey(uuid);
         }
+
+        /// <summary>Converts to string.</summary>
+        /// <returns>A <see cref="string"/> that represents this instance.</returns>
+        public override string ToString() => ToString(JsonDefaultSetting);
+
+        /// <summary>Converts to string.</summary>
+        /// <param name="settings">The settings.</param>
+        /// <returns>A <see cref="string"/> that represents this instance.</returns>
+        public string ToString(JsonSerializerSettings settings) => JsonConvert.SerializeObject(this, settings);
 
         [DataContract]
         private class ObjectMetadata
@@ -162,15 +175,6 @@ namespace CodeCave.Threejs.Entities
             [DataMember(Name = "version")]
             [JsonProperty("version")]
             public string Version { get; } = "4.3";
-
-            /// <summary>Converts to string.</summary>
-            /// <returns>A <see cref="string"/> that represents this instance.</returns>
-            public override string ToString() => ToString(JsonDefaultSetting);
-
-            /// <summary>Converts to string.</summary>
-            /// <param name="settings">The settings.</param>
-            /// <returns>A <see cref="string"/> that represents this instance.</returns>
-            public string ToString(JsonSerializerSettings settings) => JsonConvert.SerializeObject(this, settings);
         }
     }
 }
