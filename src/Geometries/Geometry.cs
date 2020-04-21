@@ -155,17 +155,26 @@ namespace CodeCave.Threejs.Entities
             public bool Visible { get; set; } = true;
         }
 
-        /// <summary>Gets the materials of this <see cref="Geometry"/> instance.</summary>
-        /// <value>The materials.</value>
-        [DataMember(Name = "materials")]
-        [JsonProperty("materials")]
-        [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "The class above is private.")]
-        public ICollection<Material> Materials { get; internal set; } = new List<Material>();
+        /// <summary>Adds the point to the vertices.</summary>
+        /// <param name="vertex">The vertex.</param>
+        public void AddPoint(Vector3 vertex)
+        {
+            if (vertex is null)
+                throw new ArgumentNullException(nameof(vertex));
+
+            Data.Vertices.Add(vertex.X);
+            Data.Vertices.Add(vertex.Y);
+            Data.Vertices.Add(vertex.Z);
+        }
 
         /// <summary>Adds the point to the vertices.</summary>
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <param name="z">The z coordinate.</param>
+        [SuppressMessage(
+            "StyleCop.CSharp.OrderingRules",
+            "SA1201:Elements should appear in the correct order",
+            Justification = "The class below is private, so it will never be OK.")]
         public void AddPoint(double x, double y, double z)
         {
             Data.Vertices.Add(x);
