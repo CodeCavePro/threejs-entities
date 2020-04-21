@@ -23,17 +23,26 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
         /// <param name="type">The type of the object.</param>
         /// <param name="uuid">The unique identified of the object.</param>
+        /// <param name="id">The identified of the object.</param>
         /// <exception cref="ArgumentException">Value cannot be null or whitespace. - type.</exception>
         [JsonConstructor]
-        public Object3D(string type = nameof(Object3D), string uuid = null)
+        public Object3D(string type = nameof(Object3D), string uuid = null, long? id = null)
         {
             children = new Dictionary<string, Object3D>();
+
+            Id = id;
             UserData = new Dictionary<string, string>();
             Uuid = uuid ?? Guid.NewGuid().ToString();
             Type = string.IsNullOrWhiteSpace(type)
                 ? nameof(Object3D)
                 : type;
         }
+
+        /// <summary>Gets the identifier.</summary>
+        /// <value>The identifier.</value>
+        [DataMember(Name = "id")]
+        [JsonProperty("id")]
+        public long? Id { get; private set; }
 
         /// <summary>
         /// Gets the UUID of this object instance.
@@ -172,6 +181,15 @@ namespace CodeCave.Threejs.Entities
         public bool HasChild(string uuid)
         {
             return children.ContainsKey(uuid);
+        }
+
+        /// <summary>Determines whether the specified child object has child.</summary>
+        /// <param name="childObject">The child object.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified child object has child; otherwise, <c>false</c>.</returns>
+        public bool HasChild(Object3D childObject)
+        {
+            return children.ContainsKey(childObject?.Uuid);
         }
     }
 }

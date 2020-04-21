@@ -155,18 +155,22 @@ namespace CodeCave.Threejs.Entities
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "The class above is private.")]
         public ICollection<Material> Materials { get; internal set; } = new List<Material>();
 
-        /// <summary>Adds the vertice.</summary>
-        /// <param name="vertice">The vertice.</param>
-        public void AddVertice(long vertice)
+        /// <summary>Adds the point to the vertices.</summary>
+        /// <param name="x">The x coordinate.</param>
+        /// <param name="y">The y coordinate.</param>
+        /// <param name="z">The z coordinate.</param>
+        public void AddPoint(double x, double y, double z)
         {
-            Data.Vertices.Add(vertice);
+            Data.Vertices.Add(x);
+            Data.Vertices.Add(y);
+            Data.Vertices.Add(z);
         }
 
-        /// <summary>Adds the faces.</summary>
-        /// <param name="faces">The faces.</param>
-        public void AddFaces(params int[] faces)
+        /// <summary>Adds a faces from its vertices.</summary>
+        /// <param name="vertices">The vertices of a face.</param>
+        public void AddFace(params int[] vertices)
         {
-            Data.Faces.AddRange(faces);
+            Data.Faces.AddRange(vertices);
         }
     }
 }
