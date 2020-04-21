@@ -132,7 +132,7 @@ namespace CodeCave.Threejs.Entities
         public IDictionary<string, string> UserData { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="Geometry.GeometryData"/> is visible.
+        /// Gets or sets a value indicating whether this <see cref="Object3D"/> is visible.
         /// </summary>
         /// <value>
         ///   <c>true</c> if visible; otherwise, <c>false</c>.
@@ -161,6 +161,27 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "receiveShadow")]
         [JsonProperty("receiveShadow")]
         public bool ReceiveShadow { get; set; } = false;
+
+        /// <summary
+        /// >Gets or sets <see cref="Point3D"/> representing the object's local position.
+        /// Default is (0, 0, 0).
+        /// </summary>
+        /// <value>The position of this object.</value>
+        [DataMember(Name = "position")]
+        [JsonProperty("position")]
+        public Point3D Position { get; set; } = new Point3D(0, 0, 0);
+
+        /// <summary>Gets or sets the object's local scale.</summary>
+        /// <value>The object's local scale.</value>
+        [DataMember(Name = "scale")]
+        [JsonProperty("scale")]
+        public Point3D Scale { get; set; } = new Point3D(1, 1, 1);
+
+        /// <summary>Gets or sets the orientation of the result.</summary>
+        /// <value>This is used by the lookAt method, for example, to determine the orientation of the result.</value>
+        [DataMember(Name = "up")]
+        [JsonProperty("up")]
+        public Point3D Up { get; set; } = new Point3D(0, 1, 0);
 
         /// <summary>Adds the child.</summary>
         /// <param name="object3D">An <see cref="Object3D"/> instance to be added as a child.</param>
