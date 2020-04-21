@@ -32,7 +32,8 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "color")]
         [JsonProperty("color")]
-        public int Color { get; set; } = 16777215;
+        [JsonConverter(typeof(ColorIntConverter))]
+        public Color Color { get; set; } = 16777215;
 
         /// <summary>
         /// Gets or sets the ambient.
@@ -42,7 +43,8 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "ambient")]
         [JsonProperty("ambient")]
-        public int Ambient { get; set; } = 16777215;
+        [JsonConverter(typeof(ColorIntConverter))]
+        public Color Ambient { get; set; } = 16777215;
 
         /// <summary>
         /// Gets or sets the emissive (light) color of the material,
@@ -53,7 +55,8 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "emissive")]
         [JsonProperty("emissive")]
-        public int Emissive { get; set; } = 1;
+        [JsonConverter(typeof(ColorIntConverter))]
+        public Color Emissive { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets the specular color of the material. Default is a Color set to 0x111111 (very dark grey).
@@ -64,10 +67,11 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "specular")]
         [JsonProperty("specular")]
-        public int Specular { get; set; } = 1118481;
+        [JsonConverter(typeof(ColorIntConverter))]
+        public Color Specular { get; set; } = 1118481;
 
         /// <summary>
-        /// Gets or sets how shiny the <see cref="Specular"/> highlight is
+        /// Gets or sets how shiny the <see cref="Color"/> highlight is
         /// A higher value gives a sharper highlight. Default is 30.
         /// </summary>
         /// <value>

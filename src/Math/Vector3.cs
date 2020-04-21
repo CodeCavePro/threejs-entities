@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
 {
-    public class Point3D : IEquatable<Point3D>, IComparable<Point3D>
+    public sealed class Vector3 : IEquatable<Vector3>, IComparable<Vector3>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Point3D"/> class.
+        /// Initializes a new instance of the <see cref="Vector3"/> class.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <param name="z">The z.</param>
-        public Point3D(long x, long y, long z)
+        public Vector3(long x, long y, long z)
         {
             X = x;
             Y = y;
@@ -32,7 +32,7 @@ namespace CodeCave.Threejs.Entities
         [JsonProperty("z")]
         public long Z { get; private set; }
 
-        public static bool operator ==(Point3D left, Point3D right)
+        public static bool operator ==(Vector3 left, Vector3 right)
         {
             if (ReferenceEquals(left, null))
             {
@@ -42,27 +42,27 @@ namespace CodeCave.Threejs.Entities
             return left.Equals(right);
         }
 
-        public static bool operator !=(Point3D left, Point3D right)
+        public static bool operator !=(Vector3 left, Vector3 right)
         {
             return !(left == right);
         }
 
-        public static bool operator <(Point3D left, Point3D right)
+        public static bool operator <(Vector3 left, Vector3 right)
         {
             return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
         }
 
-        public static bool operator <=(Point3D left, Point3D right)
+        public static bool operator <=(Vector3 left, Vector3 right)
         {
             return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
         }
 
-        public static bool operator >(Point3D left, Point3D right)
+        public static bool operator >(Vector3 left, Vector3 right)
         {
             return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
         }
 
-        public static bool operator >=(Point3D left, Point3D right)
+        public static bool operator >=(Vector3 left, Vector3 right)
         {
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
@@ -74,7 +74,7 @@ namespace CodeCave.Threejs.Entities
         /// <returns>
         /// true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.
         /// </returns>
-        public bool Equals(Point3D other)
+        public bool Equals(Vector3 other)
         {
             if (other is null)
                 return false;
@@ -96,7 +96,7 @@ namespace CodeCave.Threejs.Entities
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            return obj.GetType() == GetType() && Equals((Point3D) obj);
+            return obj.GetType() == GetType() && Equals((Vector3)obj);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace CodeCave.Threejs.Entities
         /// <param name="other">a.</param>
         /// <returns></returns>
         [SuppressMessage("Major Code Smell", "S1121:Assignments should not be made from within sub-expressions", Justification = "It's more compact like this.")]
-        public int CompareTo(Point3D other)
+        public int CompareTo(Vector3 other)
         {
             if (other is null)
                 return -1;

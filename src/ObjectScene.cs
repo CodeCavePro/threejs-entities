@@ -11,7 +11,7 @@ namespace CodeCave.Threejs.Entities
     /// More info here: https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4.
     /// </summary>
     [DataContract]
-    public sealed class JsonObjectScene
+    public sealed class ObjectScene
     {
         private static readonly JsonSerializerSettings JsonDefaultSetting = new JsonSerializerSettings
         {
@@ -27,12 +27,12 @@ namespace CodeCave.Threejs.Entities
         [JsonProperty(nameof(metadata))]
         private readonly ObjectMetadata metadata;
 
-        /// <summary>Initializes a new instance of the <see cref="JsonObjectScene"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ObjectScene"/> class.</summary>
         /// <param name="generator">The generator, which created the file..</param>
         /// <param name="uuid">The UUID.</param>
         /// <exception cref="ArgumentException">Must be a valid uninque id. - uuid.</exception>
         /// <exception cref="ArgumentNullException">metadata.</exception>
-        public JsonObjectScene(string generator, string uuid)
+        public ObjectScene(string generator, string uuid)
             : this()
         {
             Object = new Scene(uuid ?? throw new ArgumentException("Must be a valid uninque id.", nameof(uuid)));
@@ -40,10 +40,10 @@ namespace CodeCave.Threejs.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonObjectScene"/> class.
+        /// Initializes a new instance of the <see cref="ObjectScene"/> class.
         /// </summary>
         [JsonConstructor]
-        internal JsonObjectScene()
+        internal ObjectScene()
         {
             Object = new Scene(Guid.NewGuid().ToString());
             metadata = new ObjectMetadata();
