@@ -15,8 +15,13 @@ namespace CodeCave.Threejs.Entities
     /// </summary>
     /// ReSharper disable once InheritdocConsiderUsage
     [DataContract]
-    public class MeshPhongMaterial : Material
+    public sealed class MeshPhongMaterial : Material
     {
+        public MeshPhongMaterial(string uuid)
+            : base(uuid)
+        {
+        }
+
         /// <summary>
         /// Gets the type of the material.
         /// </summary>
@@ -91,5 +96,9 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "wireframe")]
         [JsonProperty("wireframe")]
         public bool Wireframe { get; set; }
+
+        public override bool Equals(object obj) => Equals(obj as MeshPhongMaterial);
+
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

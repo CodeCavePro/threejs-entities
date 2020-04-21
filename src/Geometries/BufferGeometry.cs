@@ -1,3 +1,5 @@
+using System;
+
 namespace CodeCave.Threejs.Entities
 {
     /// <summary>
@@ -10,6 +12,10 @@ namespace CodeCave.Threejs.Entities
     /// </summary>
     public class BufferGeometry
     {
-        // TODO implement buffer geometry class and use it instead of Geometry
+        public BufferGeometry()
+        {
+            // TODO implement buffer geometry class and use it instead of Geometry
+            throw new NotImplementedException("implement buffer geometry class and use it instead of Geometry");
+        }
     }
 }

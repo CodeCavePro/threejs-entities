@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -20,12 +21,13 @@ namespace CodeCave.Threejs.Entities
             Formatting = Formatting.Indented,
         };
 
-        private readonly IDictionary<string, Geometry> geometries;
-        private readonly IDictionary<string, Material> materials;
-
         [DataMember(Name = nameof(metadata))]
         [JsonProperty(nameof(metadata))]
         private readonly ObjectMetadata metadata;
+
+        private HashSet<Geometry> geometries;
+
+        private HashSet<Material> materials;
 
         /// <summary>Initializes a new instance of the <see cref="ObjectScene"/> class.</summary>
         /// <param name="generator">The generator, which created the file..</param>
@@ -45,20 +47,28 @@ namespace CodeCave.Threejs.Entities
         [JsonConstructor]
         internal ObjectScene()
         {
-            Object = new Scene(Guid.NewGuid().ToString());
             metadata = new ObjectMetadata();
+            Object = new Scene(Guid.NewGuid().ToString());
             UserData = new Dictionary<string, string>();
-            geometries = new Dictionary<string, Geometry>();
-            materials = new Dictionary<string, Material>();
+            geometries = new HashSet<Geometry>();
+            materials = new HashSet<Material>();
         }
 
         [DataMember(Name = nameof(geometries))]
         [JsonProperty(nameof(geometries))]
-        public IReadOnlyCollection<Geometry> Geometries => (IReadOnlyCollection<Geometry>)geometries.Values;
+        public IReadOnlyCollection<Geometry> Geometries
+        {
+            get => geometries as IReadOnlyCollection<Geometry>;
+            private set => geometries = new HashSet<Geometry>(value);
+        }
 
         [DataMember(Name = nameof(materials))]
         [JsonProperty(nameof(materials))]
-        public IReadOnlyCollection<Material> Materials => (IReadOnlyCollection<Material>)materials.Values;
+        public IReadOnlyCollection<Material> Materials
+        {
+            get => materials as IReadOnlyCollection<Material>;
+            private set => materials = new HashSet<Material>(value);
+        }
 
         [DataMember(Name = "object")]
         [JsonProperty("object")]
@@ -84,8 +94,13 @@ namespace CodeCave.Threejs.Entities
             if (geometry is null)
                 throw new ArgumentNullException(nameof(geometry));
 
-            if (!geometries.ContainsKey(geometry.Uuid))
-                geometries.Add(geometry.Uuid, geometry);
+            if (!geometries.Contains(geometry))
+                geometries.Add(geometry);
+        }
+
+        public bool HasGeometry(string uuid)
+        {
+            return geometries.Any(g => g.Uuid.Equals(uuid, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>Adds the material.</summary>
@@ -96,17 +111,13 @@ namespace CodeCave.Threejs.Entities
             if (material is null)
                 throw new ArgumentNullException(nameof(material));
 
-            if (!materials.ContainsKey(material.Uuid))
-                materials.Add(material.Uuid, material);
+            if (!materials.Contains(material))
+                materials.Add(material);
         }
 
-        /// <summary>Determines whether the specified UUID has material.</summary>
-        /// <param name="uuid">The UUID.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified UUID has material; otherwise, <c>false</c>.</returns>
         public bool HasMaterial(string uuid)
         {
-            return materials.ContainsKey(uuid);
+            return materials.Any(m => m.Uuid.Equals(uuid, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>Converts to string.</summary>
@@ -154,7 +165,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "generator")]
             [JsonProperty("generator")]
-            public string Generator { get; }
+            public string Generator { get; private set; }
 
             /// <summary>
             /// Gets the type of the file.
@@ -164,7 +175,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "type")]
             [JsonProperty("type")]
-            public string Type { get; } = nameof(Object);
+            public string Type { get; private set; } = nameof(Object);
 
             /// <summary>
             /// Gets the version of the file.
@@ -174,7 +185,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "version")]
             [JsonProperty("version")]
-            public string Version { get; } = "4.3";
+            public string Version { get; private set; } = "4.3";
         }
     }
 }

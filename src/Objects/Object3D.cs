@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -16,9 +17,9 @@ namespace CodeCave.Threejs.Entities
     // TODO implement: List<double> rotation
     // TODO implement: List<double> quaternion
     [DataContract]
-    public class Object3D
+    public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
-        private readonly IDictionary<string, Object3D> children;
+        private HashSet<Object3D> children;
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
         /// <param name="type">The type of the object.</param>
@@ -28,7 +29,7 @@ namespace CodeCave.Threejs.Entities
         [JsonConstructor]
         public Object3D(string type = nameof(Object3D), string uuid = null, long? id = null)
         {
-            children = new Dictionary<string, Object3D>();
+            children = new HashSet<Object3D>();
 
             Id = id;
             UserData = new Dictionary<string, string>();
@@ -98,7 +99,11 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = nameof(children))]
         [JsonProperty(nameof(children))]
-        public IReadOnlyCollection<Object3D> Children => (IReadOnlyCollection<Object3D>)children.Values;
+        public IReadOnlyCollection<Object3D> Children
+        {
+            get => children as IReadOnlyCollection<Object3D>;
+            private set => children = new HashSet<Object3D>(value);
+        }
 
         /// <summary>
         /// Gets or sets the ID of the geometry.
@@ -191,18 +196,15 @@ namespace CodeCave.Threejs.Entities
             if (object3D is null)
                 throw new ArgumentNullException(nameof(object3D), "Provide a valid Object3D instance.");
 
-            if (!children.ContainsKey(object3D.Uuid))
-                children.Add(object3D.Uuid, object3D);
+            if (!children.Contains(object3D))
+                children.Add(object3D);
         }
 
         /// <summary>Determines whether this object has a child with given UUID.</summary>
         /// <param name="uuid">The UUID of the child object.</param>
         /// <returns>
         ///   <c>true</c> if thethis object contains has a child with given UUID; otherwise, <c>false</c>.</returns>
-        public bool HasChild(string uuid)
-        {
-            return children.ContainsKey(uuid);
-        }
+        public bool HasChild(string uuid) => children.Any(c => c.Uuid.Equals(uuid, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>Determines whether the specified child object has child.</summary>
         /// <param name="childObject">The child object.</param>
@@ -210,7 +212,29 @@ namespace CodeCave.Threejs.Entities
         ///   <c>true</c> if the specified child object has child; otherwise, <c>false</c>.</returns>
         public bool HasChild(Object3D childObject)
         {
-            return children.ContainsKey(childObject?.Uuid);
+            return children.Contains(childObject);
+        }
+
+        public override bool Equals(object obj) => obj is Object3D other && Equals(other);
+
+        public bool Equals(Object3D other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
+
+        public override int GetHashCode()
+        {
+            return 2083305506 + EqualityComparer<string>.Default.GetHashCode(Uuid);
+        }
+
+        public bool Equals(Object3D x, Object3D y)
+        {
+            return x?.Equals(y) ?? false;
+        }
+
+        public int GetHashCode(Object3D obj)
+        {
+            if (obj is null)
+                throw new ArgumentNullException(nameof(obj));
+
+            return obj.GetHashCode();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CodeCave.Threejs.Entities
     /// Prefer <see cref="BufferGeometry"/> for large or serious projects.
     /// </summary>
     [DataContract]
-    public class Geometry
+    public sealed class Geometry : IEquatable<Geometry>
     {
         /// <summary>Gets the type of this object, it always equals 'Geometry'.</summary>
         /// <value>The 'Geometry' type.</value>
@@ -23,15 +23,22 @@ namespace CodeCave.Threejs.Entities
         [JsonProperty("type")]
         public const string Type = nameof(Geometry);
 
+        /// <summary>Initializes a new instance of the <see cref="Geometry"/> class.</summary>
+        /// <param name="uuid">The UUID of this object instance.</param>
+        public Geometry(string uuid)
+        {
+            Uuid = uuid ?? Guid.NewGuid().ToString();
+        }
+
         /// <summary>
-        /// Gets or sets the UUID of this object instance.
+        /// Gets the UUID of this object instance.
         /// </summary>
         /// <value>
         /// The UUID. This gets automatically assigned and shouldn't be edited.
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
-        public string Uuid { get; set; } = Guid.NewGuid().ToString();
+        public string Uuid { get; private set; }
 
         [DataMember(Name = "data")]
         [JsonProperty("data")]
@@ -171,6 +178,15 @@ namespace CodeCave.Threejs.Entities
         public void AddFace(params int[] vertices)
         {
             Data.Faces.AddRange(vertices);
+        }
+
+        public override bool Equals(object obj) => obj is Geometry geometry && Equals(geometry);
+
+        public bool Equals(Geometry other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
+
+        public override int GetHashCode()
+        {
+            return 2083305506 + EqualityComparer<string>.Default.GetHashCode(Uuid);
         }
     }
 }

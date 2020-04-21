@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -12,17 +14,24 @@ namespace CodeCave.Threejs.Entities
     /// (although they may have different defaults).
     /// </summary>
     [DataContract]
-    public abstract class Material
+    public abstract class Material : IEquatable<Material>, IEqualityComparer<Material>
     {
+        /// <summary>Initializes a new instance of the <see cref="Material"/> class.</summary>
+        /// <param name="uuid">The UUID of this object instance.</param>
+        protected Material(string uuid)
+        {
+            Uuid = uuid ?? Guid.NewGuid().ToString();
+        }
+
         /// <summary>
-        /// Gets or sets the UUID of this object instance.
+        /// Gets the UUID of this object instance.
         /// </summary>
         /// <value>
         /// The UUID. This gets automatically assigned and shouldn't be edited.
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
-        public string Uuid { get; set; }
+        public string Uuid { get; private set; }
 
         /// <summary>
         /// Gets or sets the optional name of the object (doesn't need to be unique).
@@ -68,5 +77,27 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "type")]
         [JsonProperty("type")]
         public abstract string Type { get; }
+
+        public override bool Equals(object obj) => obj is Material other && Equals(other);
+
+        public bool Equals(Material other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
+
+        public override int GetHashCode()
+        {
+            return 2083305506 + EqualityComparer<string>.Default.GetHashCode(Uuid);
+        }
+
+        public bool Equals(Material x, Material y)
+        {
+            return x?.Equals(y) ?? false;
+        }
+
+        public int GetHashCode(Material obj)
+        {
+            if (obj is null)
+                throw new ArgumentNullException(nameof(obj));
+
+            return obj.GetHashCode();
+        }
     }
 }
