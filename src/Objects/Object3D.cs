@@ -24,6 +24,8 @@ namespace CodeCave.Threejs.Entities
         /// </summary>
         /// <value>
         ///   <c>true</c> if [matrix automatic update]; otherwise, <c>false</c>.</value>
+        [DataMember(Name = "matrixAutoUpdate")]
+        [JsonProperty("matrixAutoUpdate")]
         public const bool MatrixAutoUpdate = false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
 
         private HashSet<Object3D> children;
