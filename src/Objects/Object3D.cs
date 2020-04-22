@@ -19,6 +19,13 @@ namespace CodeCave.Threejs.Entities
     [DataContract]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
+        /// <summary>
+        /// When this is set, it calculates the matrix of position, (rotation or quaternion) and scale every frame and also recalculates the matrixWorld property.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [matrix automatic update]; otherwise, <c>false</c>.</value>
+        public const bool MatrixAutoUpdate = false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
+
         private HashSet<Object3D> children;
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
@@ -83,12 +90,12 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "matrix")]
         [JsonProperty("matrix")]
-        public ICollection<double> Matrix { get; private set; } = new[]
+        public ICollection<double> Matrix => new[]
         {
-            1D, 0D, 0D, 0D,
-            0D, 1D, 0D, 0D,
-            0D, 0D, 1D, 0D,
-            0D, 0D, 0D, 1D,
+            Scale?.X ?? 1D, 0D, 0D, 0D, // TODO implement rotation, quaternion
+            0D, Scale?.Y ?? 1D, 0D, 0D,
+            0D, 0D, Scale?.Z ?? 0D, 0D,
+            Position?.X ?? 0D, Position?.X ?? 0D, Position?.X ?? 0D, 1D,
         };
 
         /// <summary>

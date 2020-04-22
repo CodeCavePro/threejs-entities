@@ -157,6 +157,10 @@ namespace CodeCave.Threejs.Entities
 
         /// <summary>Adds the point to the vertices.</summary>
         /// <param name="vertex">The vertex.</param>
+        [SuppressMessage(
+            "StyleCop.CSharp.OrderingRules",
+            "SA1201:Elements should appear in the correct order",
+            Justification = "The class below is private, so it will never be OK.")]
         public void AddPoint(Vector3 vertex)
         {
             if (vertex is null)
@@ -171,10 +175,6 @@ namespace CodeCave.Threejs.Entities
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <param name="z">The z coordinate.</param>
-        [SuppressMessage(
-            "StyleCop.CSharp.OrderingRules",
-            "SA1201:Elements should appear in the correct order",
-            Justification = "The class below is private, so it will never be OK.")]
         public void AddPoint(double x, double y, double z)
         {
             Data.Vertices.Add(x);
