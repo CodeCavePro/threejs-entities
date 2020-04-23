@@ -12,10 +12,6 @@ namespace CodeCave.Threejs.Entities
     /// Note that this can be used for grouping objects via the .add( object ) method
     /// which adds the object as a child, however it is better to use Group for this.
     /// </summary>
-    // TODO implement: List<double> scale
-    // TODO implement: List<double> position
-    // TODO implement: List<double> rotation
-    // TODO implement: List<double> quaternion
     [DataContract]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
@@ -122,7 +118,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "geometry")]
         [JsonProperty("geometry")]
-        public string Geometry { get; set; }
+        public string GeometryUuid { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the material.
@@ -132,7 +128,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "material")]
         [JsonProperty("material")]
-        public string Material { get; set; }
+        public string MaterialUuid { get; set; }
 
         /// <summary>
         /// Gets or sets the user data.
