@@ -93,7 +93,7 @@ namespace CodeCave.Threejs.Entities
             Scale?.X ?? 1D, 0D, 0D, 0D, // TODO implement rotation, quaternion
             0D, Scale?.Y ?? 1D, 0D, 0D,
             0D, 0D, Scale?.Z ?? 0D, 0D,
-            Position?.X ?? 0D, Position?.X ?? 0D, Position?.X ?? 0D, 1D,
+            Position?.X ?? 0D, Position?.Y ?? 0D, Position?.Z ?? 0D, 1D,
         };
 
         /// <summary>
