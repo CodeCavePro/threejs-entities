@@ -10,6 +10,7 @@ namespace CodeCave.Threejs.Entities
     ///
     /// For a less efficient but easier-to-use representation of geometry, see <see cref="Geometry"/>.
     /// </summary>
+    [Serializable]
     public class BufferGeometry
     {
         public BufferGeometry()

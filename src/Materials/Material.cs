@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using JsonSubTypes;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -13,8 +14,12 @@ namespace CodeCave.Threejs.Entities
     /// The following properties and methods are inherited by all other material types
     /// (although they may have different defaults).
     /// </summary>
+    [Serializable]
     [DataContract]
-    public abstract class Material : IEquatable<Material>, IEqualityComparer<Material>
+    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [JsonSubtypes.KnownSubType(typeof(MeshPhongMaterial), nameof(MeshPhongMaterial))]
+    [JsonSubtypes.KnownSubType(typeof(MeshStandardMaterial), nameof(MeshStandardMaterial))]
+    public class Material : IEquatable<Material>, IEqualityComparer<Material>
     {
         /// <summary>Initializes a new instance of the <see cref="Material"/> class.</summary>
         /// <param name="uuid">The UUID of this object instance.</param>
@@ -76,7 +81,7 @@ namespace CodeCave.Threejs.Entities
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
-        public abstract string Type { get; }
+        public virtual string Type => nameof(Material);
 
         public override bool Equals(object obj) => obj is Material other && Equals(other);
 

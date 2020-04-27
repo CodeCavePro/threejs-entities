@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using JsonSubTypes;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -13,6 +14,9 @@ namespace CodeCave.Threejs.Entities
     /// which adds the object as a child, however it is better to use Group for this.
     /// </summary>
     [DataContract]
+    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]
+    [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
         /// <summary>

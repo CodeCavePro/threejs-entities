@@ -27,7 +27,7 @@ namespace CodeCave.Threejs.Entities
 
         private HashSet<Geometry> geometries;
 
-        private HashSet<MeshPhongMaterial> materials;
+        private HashSet<Material> materials;
 
         /// <summary>Initializes a new instance of the <see cref="ObjectScene"/> class.</summary>
         /// <param name="generator">The generator, which created the file..</param>
@@ -51,7 +51,7 @@ namespace CodeCave.Threejs.Entities
             Object = new Scene(Guid.NewGuid().ToString());
             UserData = new Dictionary<string, string>();
             geometries = new HashSet<Geometry>();
-            materials = new HashSet<MeshPhongMaterial>();
+            materials = new HashSet<Material>();
         }
 
         [DataMember(Name = nameof(geometries))]
@@ -64,10 +64,10 @@ namespace CodeCave.Threejs.Entities
 
         [DataMember(Name = nameof(materials))]
         [JsonProperty(nameof(materials))]
-        public IReadOnlyCollection<MeshPhongMaterial> Materials
+        public IReadOnlyCollection<Material> Materials
         {
-            get => materials as IReadOnlyCollection<MeshPhongMaterial>;
-            private set => materials = new HashSet<MeshPhongMaterial>(value);
+            get => materials as IReadOnlyCollection<Material>;
+            private set => materials = new HashSet<Material>(value);
         }
 
         [DataMember(Name = "object")]
@@ -106,7 +106,7 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Adds the material.</summary>
         /// <param name="material">The material.</param>
         /// <exception cref="ArgumentNullException">material.</exception>
-        public void AddMaterial(MeshPhongMaterial material)
+        public void AddMaterial(Material material)
         {
             if (material is null)
                 throw new ArgumentNullException(nameof(material));

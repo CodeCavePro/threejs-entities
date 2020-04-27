@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -14,7 +15,9 @@ namespace CodeCave.Threejs.Entities
     /// Performance will generally be greater when using this material over the MeshStandardMaterial or MeshPhysicalMaterial, at the cost of some graphical accuracy.
     /// </summary>
     /// ReSharper disable once InheritdocConsiderUsage
+    [Serializable]
     [DataContract]
+    // [JsonConverter(typeof(MaterialConverter))]
     public sealed class MeshPhongMaterial : Material
     {
         public MeshPhongMaterial(string uuid)
