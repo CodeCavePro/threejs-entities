@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -23,30 +24,39 @@ namespace CodeCave.Threejs.Entities
         /// <value>The 'BoxGeometry' type.</value>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
+
         public override string Type => nameof(BoxGeometry);
 
         /// <summary>
         /// Gets or sets width — Width; that is, the length of the edges parallel to the X axis. Optional; defaults to 1.
         /// </summary>
         /// <value>The width.</value>
+        [DataMember(Name = "width")]
         [JsonProperty("width")]
+        [JsonPropertyName("type")]
         public double Width { get; set; }
 
         /// <summary>
         /// Gets or sets height — Height; that is, the length of the edges parallel to the Y axis.Optional; defaults to 1.
         /// </summary>
         /// <value>The height.</value>
+        [DataMember(Name = "height")]
         [JsonProperty("height")]
+        [JsonPropertyName("height")]
         public double Height { get; set; }
 
         /// <summary>
         /// Gets or sets depth — Depth; that is, the length of the edges parallel to the Z axis.Optional; defaults to 1.
         /// </summary>
         /// <value>The depth.</value>
+        [DataMember(Name = "depth")]
         [JsonProperty("depth")]
+        [JsonPropertyName("depth")]
         public double Depth { get; set; }
 
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public override GeometryData Data => null;
 
         public override bool Equals(object obj) => obj is BoxGeometry geometry && Equals(geometry);

@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -34,6 +35,7 @@ namespace CodeCave.Threejs.Entities
         ///   <c>true</c> if [automatic update]; otherwise, <c>false</c>.</value>
         [DataMember(Name = "autoUpdate")]
         [JsonProperty("autoUpdate")]
+        [JsonPropertyName("autoUpdate")]
         public bool AutoUpdate { get; set; } = true;
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The background object.</value>
         [DataMember(Name = "background")]
         [JsonProperty("background")]
+        [JsonPropertyName("background")]
         public object Background { get; set; }
 
         /// <summary>Gets or sets the override material.</summary>
@@ -51,6 +54,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The override material.</value>
         [DataMember(Name = "overrideMaterial")]
         [JsonProperty("overrideMaterial")]
+        [JsonPropertyName("overrideMaterial")]
         public Material OverrideMaterial { get; set; }
     }
 }

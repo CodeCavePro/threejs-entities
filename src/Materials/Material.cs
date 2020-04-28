@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using JsonSubTypes;
 using Newtonsoft.Json;
 
@@ -16,7 +17,7 @@ namespace CodeCave.Threejs.Entities
     /// </summary>
     [Serializable]
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(MeshPhongMaterial), nameof(MeshPhongMaterial))]
     [JsonSubtypes.KnownSubType(typeof(MeshStandardMaterial), nameof(MeshStandardMaterial))]
     public class Material : IEquatable<Material>, IEqualityComparer<Material>
@@ -36,6 +37,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; private set; }
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "name")]
         [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
@@ -61,6 +64,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "opacity")]
         [JsonProperty("opacity")]
+        [JsonPropertyName("opacity")]
         public double Opacity { get; set; } = 1;
 
         /// <summary>
@@ -74,6 +78,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "transparent")]
         [JsonProperty("transparent")]
+        [JsonPropertyName("transparent")]
         public bool Transparent { get; set; }
 
         /// <summary>
@@ -81,6 +86,8 @@ namespace CodeCave.Threejs.Entities
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
+
         public virtual string Type => nameof(Material);
 
         public override bool Equals(object obj) => obj is Material other && Equals(other);

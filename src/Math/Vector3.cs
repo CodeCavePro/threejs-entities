@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -22,14 +23,17 @@ namespace CodeCave.Threejs.Entities
 
         [DataMember(Name = "x")]
         [JsonProperty("x")]
+        [JsonPropertyName("x")]
         public long X { get; private set; }
 
         [DataMember(Name = "y")]
         [JsonProperty("y")]
+        [JsonPropertyName("y")]
         public long Y { get; private set; }
 
         [DataMember(Name = "z")]
         [JsonProperty("z")]
+        [JsonPropertyName("z")]
         public long Z { get; private set; }
 
         public static bool operator ==(Vector3 left, Vector3 right)

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -18,6 +19,7 @@ namespace CodeCave.Threejs.Entities
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public override string Type => nameof(MeshStandardMaterial);
 
         /// <summary>
@@ -28,7 +30,9 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "color")]
         [JsonProperty("color")]
-        [JsonConverter(typeof(ColorIntConverter))]
+        [JsonPropertyName("color")]
+        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
         public Color Color { get; set; } = 11674146;
 
         /// <summary>
@@ -37,6 +41,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The roughness.</value>
         [DataMember(Name = "roughness")]
         [JsonProperty("roughness")]
+        [JsonPropertyName("roughness")]
         public double Roughness { get; set; }
 
         /// <summary>
@@ -46,6 +51,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The metalness.</value>
         [DataMember(Name = "metalness")]
         [JsonProperty("metalness")]
+        [JsonPropertyName("metalness")]
         public double Metalness { get; set; } = 0.0;
 
         /// <summary>
@@ -57,6 +63,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "emissive")]
         [JsonProperty("emissive")]
+        [JsonPropertyName("emissive")]
         public long Emissive { get; set; } = 2434361;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -30,6 +31,7 @@ namespace CodeCave.Threejs.Entities
         /// </summary>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public override string Type => nameof(MeshPhongMaterial);
 
         /// <summary>
@@ -40,7 +42,9 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "color")]
         [JsonProperty("color")]
-        [JsonConverter(typeof(ColorIntConverter))]
+        [JsonPropertyName("color")]
+        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
         public Color Color { get; set; } = 16777215;
 
         /// <summary>
@@ -51,7 +55,10 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "ambient")]
         [JsonProperty("ambient")]
-        [JsonConverter(typeof(ColorIntConverter))]
+        [JsonPropertyName("ambient")]
+        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+
         public Color Ambient { get; set; } = 16777215;
 
         /// <summary>
@@ -63,7 +70,9 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "emissive")]
         [JsonProperty("emissive")]
-        [JsonConverter(typeof(ColorIntConverter))]
+        [JsonPropertyName("emissive")]
+        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
         public Color Emissive { get; set; } = 1;
 
         /// <summary>
@@ -75,7 +84,9 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "specular")]
         [JsonProperty("specular")]
-        [JsonConverter(typeof(ColorIntConverter))]
+        [JsonPropertyName("specular")]
+        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
         public Color Specular { get; set; } = 1118481;
 
         /// <summary>
@@ -87,6 +98,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "shininess")]
         [JsonProperty("shininess")]
+        [JsonPropertyName("shininess")]
         public int Shininess { get; set; } = 30;
 
         /// <summary>
@@ -98,6 +110,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "wireframe")]
         [JsonProperty("wireframe")]
+        [JsonPropertyName("wireframe")]
         public bool Wireframe { get; set; }
 
         public override bool Equals(object obj) => Equals(obj as MeshPhongMaterial);

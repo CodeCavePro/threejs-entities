@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -21,10 +22,6 @@ namespace CodeCave.Threejs.Entities
             Formatting = Formatting.Indented,
         };
 
-        [DataMember(Name = nameof(metadata))]
-        [JsonProperty(nameof(metadata))]
-        private readonly ObjectMetadata metadata;
-
         private HashSet<Geometry> geometries;
 
         private HashSet<Material> materials;
@@ -38,7 +35,7 @@ namespace CodeCave.Threejs.Entities
             : this()
         {
             Object = new Scene(uuid ?? throw new ArgumentException("Must be a valid uninque id.", nameof(uuid)));
-            metadata = new ObjectMetadata(generator);
+            Metadata = new ObjectMetadata(generator);
         }
 
         /// <summary>
@@ -47,7 +44,7 @@ namespace CodeCave.Threejs.Entities
         [JsonConstructor]
         public ObjectScene()
         {
-            metadata = new ObjectMetadata();
+            Metadata = new ObjectMetadata();
             Object = new Scene(Guid.NewGuid().ToString());
             UserData = new Dictionary<string, string>();
             geometries = new HashSet<Geometry>();
@@ -56,6 +53,7 @@ namespace CodeCave.Threejs.Entities
 
         [DataMember(Name = nameof(geometries))]
         [JsonProperty(nameof(geometries))]
+        [JsonPropertyName(nameof(geometries))]
         public IReadOnlyCollection<Geometry> Geometries
         {
             get => geometries as IReadOnlyCollection<Geometry>;
@@ -64,6 +62,7 @@ namespace CodeCave.Threejs.Entities
 
         [DataMember(Name = nameof(materials))]
         [JsonProperty(nameof(materials))]
+        [JsonPropertyName(nameof(materials))]
         public IReadOnlyCollection<Material> Materials
         {
             get => materials as IReadOnlyCollection<Material>;
@@ -72,6 +71,7 @@ namespace CodeCave.Threejs.Entities
 
         [DataMember(Name = "object")]
         [JsonProperty("object")]
+        [JsonPropertyName("object")]
         [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Doesn't really matter")]
         public Object3D Object { get; internal set; }
 
@@ -84,7 +84,13 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "userData")]
         [JsonProperty("userData")]
+        [JsonPropertyName("userData")]
         public IDictionary<string, string> UserData { get; set; }
+
+        [DataMember(Name = "metadata")]
+        [JsonProperty("metadata")]
+        [JsonPropertyName("metadata")]
+        private ObjectMetadata Metadata { get; }
 
         /// <summary>Adds the geometry.</summary>
         /// <param name="geometry">The geometry.</param>
@@ -130,7 +136,7 @@ namespace CodeCave.Threejs.Entities
         public string ToString(JsonSerializerSettings settings) => JsonConvert.SerializeObject(this, settings);
 
         [DataContract]
-        private class ObjectMetadata
+        public class ObjectMetadata
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ObjectMetadata"/> class.
@@ -165,6 +171,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "generator")]
             [JsonProperty("generator")]
+            [JsonPropertyName("generator")]
             public string Generator { get; private set; }
 
             /// <summary>
@@ -175,6 +182,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "type")]
             [JsonProperty("type")]
+            [JsonPropertyName("type")]
             public string Type { get; private set; } = nameof(Object);
 
             /// <summary>
@@ -185,6 +193,7 @@ namespace CodeCave.Threejs.Entities
             /// </value>
             [DataMember(Name = "version")]
             [JsonProperty("version")]
+            [JsonPropertyName("version")]
             public string Version { get; private set; } = "4.3";
         }
     }

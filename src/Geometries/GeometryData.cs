@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
@@ -24,6 +25,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "castShadow")]
         [JsonProperty("castShadow")]
+        [JsonPropertyName("castShadow")]
         public bool CastShadow { get; set; } = true;
 
         /// <summary>
@@ -34,6 +36,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "colors")]
         [JsonProperty("colors")]
+        [JsonPropertyName("colors")]
         public ICollection<int> Colors { get; set; } = new List<int>();
 
         /// <summary>
@@ -44,6 +47,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "doubleSided")]
         [JsonProperty("doubleSided")]
+        [JsonPropertyName("doubleSided")]
         public bool DoubleSided { get; set; } = true;
 
         /// <summary>
@@ -56,6 +60,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "faces")]
         [JsonProperty("faces")]
+        [JsonPropertyName("faces")]
         public List<int> Faces { get; set; } = new List<int>();
 
         /// <summary>
@@ -66,6 +71,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "normals")]
         [JsonProperty("normals")]
+        [JsonPropertyName("normals")]
         public ICollection<double> Normals { get; set; } = new List<double>();
 
         /// <summary>
@@ -77,6 +83,7 @@ namespace CodeCave.Threejs.Entities
         /// ReSharper disable once RedundantDefaultMemberInitializer
         [DataMember(Name = "receiveShadow")]
         [JsonProperty("receiveShadow")]
+        [JsonPropertyName("receiveShadow")]
         public bool ReceiveShadow { get; set; } = false;
 
         /// <summary>
@@ -88,6 +95,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "scale")]
         [JsonProperty("scale")]
+        [JsonPropertyName("scale")]
         public double Scale { get; set; } = 1.0D;
 
         /// <summary>
@@ -99,6 +107,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "uvs")]
         [JsonProperty("uvs")]
+        [JsonPropertyName("uvs")]
         public ICollection<double> UVs { get; set; } = new List<double>();
 
         /// <summary>
@@ -109,6 +118,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "vertices")]
         [JsonProperty("vertices")]
+        [JsonPropertyName("vertices")]
         public ICollection<double> Vertices { get; set; } = new List<double>();
 
         /// <summary>
@@ -119,6 +129,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "visible")]
         [JsonProperty("visible")]
+        [JsonPropertyName("visible")]
         public bool Visible { get; set; } = true;
     }
 }

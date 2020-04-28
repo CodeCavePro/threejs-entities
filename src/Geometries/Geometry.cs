@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using JsonSubTypes;
 using Newtonsoft.Json;
 
@@ -17,7 +18,7 @@ namespace CodeCave.Threejs.Entities
     /// </summary>
     [Serializable]
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(BoxGeometry), nameof(BoxGeometry))]
     public partial class Geometry : IEquatable<Geometry>
     {
@@ -34,6 +35,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The 'Geometry' type.</value>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public virtual string Type => nameof(Geometry);
 
         /// <summary>
@@ -44,10 +46,12 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; private set; }
 
         [DataMember(Name = "data")]
         [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public virtual GeometryData Data { get; private set; }
 
         /// <summary>Adds the point to the vertices.</summary>

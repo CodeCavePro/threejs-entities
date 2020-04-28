@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using JsonSubTypes;
 using Newtonsoft.Json;
 
@@ -14,7 +15,7 @@ namespace CodeCave.Threejs.Entities
     /// which adds the object as a child, however it is better to use Group for this.
     /// </summary>
     [DataContract]
-    [JsonConverter(typeof(JsonSubtypes), nameof(Type))]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]
     [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
@@ -26,7 +27,8 @@ namespace CodeCave.Threejs.Entities
         ///   <c>true</c> if [matrix automatic update]; otherwise, <c>false</c>.</value>
         [DataMember(Name = "matrixAutoUpdate")]
         [JsonProperty("matrixAutoUpdate")]
-        public const bool MatrixAutoUpdate = false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
+        [JsonPropertyName("matrixAutoUpdate")]
+        public bool MatrixAutoUpdate => false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
 
         private HashSet<Object3D> children;
 
@@ -52,6 +54,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The identifier.</value>
         [DataMember(Name = "id")]
         [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public long? Id { get; private set; }
 
         /// <summary>
@@ -62,6 +65,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public string Uuid { get; private set; }
 
         /// <summary>
@@ -72,6 +76,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "name")]
         [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
@@ -82,6 +87,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "type")]
         [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; }
 
         /// <summary>
@@ -92,6 +98,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "matrix")]
         [JsonProperty("matrix")]
+        [JsonPropertyName("matrix")]
         public ICollection<double> Matrix => new[]
         {
             Scale?.X ?? 1D, 0D, 0D, 0D, // TODO implement rotation, quaternion
@@ -122,6 +129,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "geometry")]
         [JsonProperty("geometry")]
+        [JsonPropertyName("geometry")]
         public string GeometryUuid { get; set; }
 
         /// <summary>
@@ -132,6 +140,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "material")]
         [JsonProperty("material")]
+        [JsonPropertyName("material")]
         public string MaterialUuid { get; set; }
 
         /// <summary>
@@ -143,6 +152,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "userData")]
         [JsonProperty("userData")]
+        [JsonPropertyName("userData")]
         public IDictionary<string, string> UserData { get; set; }
 
         /// <summary>
@@ -153,6 +163,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "visible")]
         [JsonProperty("visible")]
+        [JsonPropertyName("visible")]
         public bool Visible { get; set; } = true;
 
         /// <summary>
@@ -163,6 +174,7 @@ namespace CodeCave.Threejs.Entities
         /// </value>
         [DataMember(Name = "castShadow")]
         [JsonProperty("castShadow")]
+        [JsonPropertyName("castShadow")]
         public bool CastShadow { get; set; } = true;
 
         /// <summary>
@@ -174,6 +186,7 @@ namespace CodeCave.Threejs.Entities
         /// ReSharper disable once RedundantDefaultMemberInitializer
         [DataMember(Name = "receiveShadow")]
         [JsonProperty("receiveShadow")]
+        [JsonPropertyName("receiveShadow")]
         public bool ReceiveShadow { get; set; } = false;
 
         /// <summary
@@ -183,18 +196,21 @@ namespace CodeCave.Threejs.Entities
         /// <value>The position of this object.</value>
         [DataMember(Name = "position")]
         [JsonProperty("position")]
+        [JsonPropertyName("position")]
         public Vector3 Position { get; set; } = new Vector3(0, 0, 0);
 
         /// <summary>Gets or sets the object's local scale.</summary>
         /// <value>The object's local scale.</value>
         [DataMember(Name = "scale")]
         [JsonProperty("scale")]
+        [JsonPropertyName("scale")]
         public Vector3 Scale { get; set; } = new Vector3(1, 1, 1);
 
         /// <summary>Gets or sets the orientation of the result.</summary>
         /// <value>This is used by the lookAt method, for example, to determine the orientation of the result.</value>
         [DataMember(Name = "up")]
         [JsonProperty("up")]
+        [JsonPropertyName("up")]
         public Vector3 Up { get; set; } = new Vector3(0, 1, 0);
 
         /// <summary>Adds the child.</summary>
