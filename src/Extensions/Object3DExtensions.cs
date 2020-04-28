@@ -12,7 +12,7 @@ namespace CodeCave.Threejs.Entities
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">objectScene
         /// or
-        /// otherScene</exception>
+        /// otherScene.</exception>
         public static ObjectScene Merge(this ObjectScene objectScene, ObjectScene otherScene, Vector3 newPosition = null)
         {
             if (objectScene is null)
@@ -54,7 +54,7 @@ namespace CodeCave.Threejs.Entities
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">objectScene</exception>
+        /// <exception cref="ArgumentNullException">objectScene.</exception>
         public static Object3D AddCube(this ObjectScene objectScene, double width, double height, double depth, Vector3 position = default, int color = 11674146)
         {
             if (objectScene is null)

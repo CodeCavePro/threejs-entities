@@ -3,9 +3,9 @@
 namespace System.Text.Json.Serialization
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class JsonIgnore : Attribute
+    public sealed class JsonIgnoreAttribute : Attribute
     {
-        public JsonIgnore()
+        public JsonIgnoreAttribute()
         {
             // does nothing on .NET Framework 4.5
         }

@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
 {
+    [Serializable]
+    [JsonConverter(typeof(ColorIntConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
     public class Color
     {
         private readonly int integerValue;

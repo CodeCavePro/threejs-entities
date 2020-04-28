@@ -2,7 +2,8 @@ namespace CodeCave.Threejs.Entities
 {
     public class ColorIntConverterMicrosoft
 #if NET45
-    { }
+    {
+    }
 #else
         : System.Text.Json.Serialization.JsonConverter<Color>
     {

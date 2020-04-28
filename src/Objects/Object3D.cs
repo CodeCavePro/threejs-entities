@@ -20,16 +20,6 @@ namespace CodeCave.Threejs.Entities
     [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
-        /// <summary>
-        /// When this is set, it calculates the matrix of position, (rotation or quaternion) and scale every frame and also recalculates the matrixWorld property.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [matrix automatic update]; otherwise, <c>false</c>.</value>
-        [DataMember(Name = "matrixAutoUpdate")]
-        [JsonProperty("matrixAutoUpdate")]
-        [JsonPropertyName("matrixAutoUpdate")]
-        public bool MatrixAutoUpdate => false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
-
         private HashSet<Object3D> children;
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
@@ -106,6 +96,17 @@ namespace CodeCave.Threejs.Entities
             0D, 0D, Scale?.Z ?? 0D, 0D,
             Position?.X ?? 0D, Position?.Y ?? 0D, Position?.Z ?? 0D, 1D,
         };
+
+        /// <summary>
+        /// Gets a value indicating whether when this is set, it calculates the matrix of position, (rotation or quaternion) and scale
+        /// every frame and also recalculates the matrixWorld property.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [matrix automatic update]; otherwise, <c>false</c>.</value>
+        [DataMember(Name = "matrixAutoUpdate")]
+        [JsonProperty("matrixAutoUpdate")]
+        [JsonPropertyName("matrixAutoUpdate")]
+        public bool MatrixAutoUpdate => false; // HACK: since we calculate Matrix from Position, Scale, Rotation etc, we don't auto-update it
 
         /// <summary>
         /// Gets the array of object's children.
