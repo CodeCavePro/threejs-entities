@@ -45,7 +45,7 @@ namespace CodeCave.Threejs.Entities
         /// Initializes a new instance of the <see cref="ObjectScene"/> class.
         /// </summary>
         [JsonConstructor]
-        internal ObjectScene()
+        public ObjectScene()
         {
             metadata = new ObjectMetadata();
             Object = new Scene(Guid.NewGuid().ToString());
