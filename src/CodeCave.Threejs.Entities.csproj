@@ -22,12 +22,7 @@
   <ItemGroup>
     <PackageReference Include="JsonSubTypes" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Text.Json">
-      <Version>4.7.1</Version>
-    </PackageReference>
+    <PackageReference Include="System.Text.Json" Version="4.7.1" Condition="'$(TargetFramework)' != 'net45'" />
   </ItemGroup>
 
 </Project>
