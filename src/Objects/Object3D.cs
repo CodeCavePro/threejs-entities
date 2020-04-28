@@ -214,6 +214,11 @@ namespace CodeCave.Threejs.Entities
         [JsonPropertyName("up")]
         public Vector3 Up { get; set; } = new Vector3(0, 1, 0);
 
+        /// <summary>Gets a value indicating whether this instance is invisible (has no geometry and no material).</summary>
+        /// <value>
+        ///   <c>true</c> if this instance is invisible; otherwise, <c>false</c>.</value>
+        public bool IsInvisible => string.IsNullOrWhiteSpace(MaterialUuid) && string.IsNullOrWhiteSpace(GeometryUuid);
+
         /// <summary>Adds the child.</summary>
         /// <param name="object3D">An <see cref="Object3D"/> instance to be added as a child.</param>
         /// <exception cref="ArgumentNullException">Provide a valid Object3D instance.</exception>
@@ -241,20 +246,52 @@ namespace CodeCave.Threejs.Entities
             return children.Contains(childObject);
         }
 
-        public override bool Equals(object obj) => obj is Object3D other && Equals(other);
-
-        public bool Equals(Object3D other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
-
-        public override int GetHashCode()
+        /// <summary>Optimizes object by flattening the structure and removing invisible items.</summary>
+        /// <returns>Optimized object.</returns>
+        public Object3D Optimize()
         {
-            return 2083305506 + EqualityComparer<string>.Default.GetHashCode(Uuid);
+            children = new HashSet<Object3D>(children
+                .Flatten()
+                .Where(c => !c.IsInvisible));
+            return this;
         }
 
+        /// <summary>Determines whether the specified <see cref="object"/>, is equal to this instance.</summary>
+        /// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is Object3D other && Equals(other);
+
+        /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        public bool Equals(Object3D other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>Returns a hash code for this instance.</summary>
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        public override int GetHashCode()
+        {
+            var hashCode = -107387115;
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(Uuid);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(GeometryUuid);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(MaterialUuid);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<HashSet<Object3D>>.Default.GetHashCode(children);
+            return hashCode;
+        }
+
+        /// <summary>Determines whether the specified objects are equal.</summary>
+        /// <param name="x">The first <see cref="Object3D" /> object to compare.</param>
+        /// <param name="y">The second <see cref="Object3D" /> object to compare.</param>
+        /// <returns>true if the specified objects are equal; otherwise, false.</returns>
         public bool Equals(Object3D x, Object3D y)
         {
             return x?.Equals(y) ?? false;
         }
 
+        /// <summary>Returns a hash code for this instance.</summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        /// <exception cref="ArgumentNullException">obj</exception>
         public int GetHashCode(Object3D obj)
         {
             if (obj is null)

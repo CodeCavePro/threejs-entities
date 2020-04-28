@@ -135,66 +135,20 @@ namespace CodeCave.Threejs.Entities
         /// <returns>A <see cref="string"/> that represents this instance.</returns>
         public string ToString(JsonSerializerSettings settings) => JsonConvert.SerializeObject(this, settings);
 
-        [DataContract]
-        public class ObjectMetadata
+        /// <summary>Optimizes object scene by flattening the structure and removing invisible items.</summary>
+        /// <param name="aggressive">if set to <c>true</c> [aggressive].</param>
+        /// <returns>Optimized object scene.</returns>
+        public ObjectScene Optimize(bool aggressive = false)
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ObjectMetadata"/> class.
-            /// </summary>
-            /// <param name="generator">The generator, which created the file.</param>
-            /// <exception cref="ArgumentNullException">version.</exception>
-            /// <exception cref="ArgumentException">
-            /// Value cannot be null or whitespace. - generator
-            /// or
-            /// Value cannot be null or whitespace. - type.
-            /// </exception>
-            public ObjectMetadata(string generator)
-            {
-                if (string.IsNullOrWhiteSpace(generator))
-                    throw new ArgumentException("Value cannot be null or whitespace.", nameof(generator));
-                Generator = generator;
-            }
+            if ((Object?.Children?.Count ?? 0) == 0)
+                return this;
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ObjectMetadata"/> class.
-            /// </summary>
-            [JsonConstructor]
-            internal ObjectMetadata()
-            {
-            }
+            Object.Optimize();
 
-            /// <summary>
-            /// Gets the generator, which created the file.
-            /// </summary>
-            /// <value>
-            /// The generator, which created the file.
-            /// </value>
-            [DataMember(Name = "generator")]
-            [JsonProperty("generator")]
-            [JsonPropertyName("generator")]
-            public string Generator { get; private set; }
+            while (aggressive && Object.IsInvisible && (Object?.Children?.Count ?? 0) == 1)
+                Object = Object.Children.FirstOrDefault();
 
-            /// <summary>
-            /// Gets the type of the file.
-            /// </summary>
-            /// <value>
-            /// The type of the file.
-            /// </value>
-            [DataMember(Name = "type")]
-            [JsonProperty("type")]
-            [JsonPropertyName("type")]
-            public string Type { get; private set; } = nameof(Object);
-
-            /// <summary>
-            /// Gets the version of the file.
-            /// </summary>
-            /// <value>
-            /// The version of the file.
-            /// </value>
-            [DataMember(Name = "version")]
-            [JsonProperty("version")]
-            [JsonPropertyName("version")]
-            public string Version { get; private set; } = "4.3";
+            return this;
         }
     }
 }

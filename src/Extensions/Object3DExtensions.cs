@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeCave.Threejs.Entities
@@ -80,6 +82,18 @@ namespace CodeCave.Threejs.Entities
             objectScene.Object.AddChild(cubeObject);
 
             return cubeObject;
+        }
+
+        internal static IEnumerable<Object3D> Flatten(this IEnumerable<Object3D> collection)
+        {
+            foreach (var obj in collection)
+            {
+                if (obj.Children.Count == 0)
+                    yield return obj;
+
+                foreach (var c in obj.Children.Flatten())
+                    yield return c;
+            }
         }
     }
 }
