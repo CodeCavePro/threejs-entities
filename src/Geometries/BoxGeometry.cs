@@ -11,13 +11,18 @@ namespace CodeCave.Threejs.Entities
     {
         /// <summary>Initializes a new instance of the <see cref="BoxGeometry"/> class.</summary>
         /// <param name="uuid">The UUID of this object instance.</param>
-        [JsonConstructor]
         public BoxGeometry(string uuid, double width = 1D, double height = 1D, double depth = 1D)
             : base(uuid)
         {
             Width = width;
             Height = height;
             Depth = depth;
+        }
+
+        [JsonConstructor]
+        private BoxGeometry()
+            : base(Guid.NewGuid().ToString())
+        {
         }
 
         /// <summary>Gets the type of this object, it always equals 'BoxGeometry'.</summary>

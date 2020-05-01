@@ -25,6 +25,12 @@ namespace CodeCave.Threejs.Entities
         {
         }
 
+        [JsonConstructor]
+        private MeshPhongMaterial()
+            : base(Guid.NewGuid().ToString())
+        {
+        }
+
         /// <summary>
         /// Gets the type of the material.
         /// </summary>

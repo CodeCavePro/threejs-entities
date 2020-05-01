@@ -12,10 +12,7 @@ namespace CodeCave.Threejs.Entities.Utf8Json
             System.Type typeToConvert,
             System.Text.Json.JsonSerializerOptions options)
         {
-            if (!int.TryParse(reader.GetString(), out var integerValue))
-                throw new System.NotImplementedException();
-
-            return new Color(integerValue);
+            return new Color(reader.GetInt32());
         }
 
         public override void Write(

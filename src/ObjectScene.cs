@@ -13,6 +13,7 @@ namespace CodeCave.Threejs.Entities
     /// More info here: https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4.
     /// </summary>
     [DataContract]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<ObjectScene>))]
     public sealed class ObjectScene
     {
         private static readonly JsonSerializerSettings JsonDefaultSetting = new JsonSerializerSettings
@@ -22,9 +23,9 @@ namespace CodeCave.Threejs.Entities
             Formatting = Formatting.Indented,
         };
 
-        private HashSet<Geometry> geometries;
+        private IList<Geometry> geometries;
 
-        private HashSet<Material> materials;
+        private IList<Material> materials;
 
         /// <summary>Initializes a new instance of the <see cref="ObjectScene"/> class.</summary>
         /// <param name="generator">The generator, which created the file..</param>
@@ -47,8 +48,8 @@ namespace CodeCave.Threejs.Entities
             Metadata = new ObjectMetadata();
             Object = new Scene(Guid.NewGuid().ToString());
             UserData = new Dictionary<string, string>();
-            geometries = new HashSet<Geometry>();
-            materials = new HashSet<Material>();
+            geometries = new List<Geometry>();
+            materials = new List<Material>();
         }
 
         [DataMember(Name = nameof(geometries))]
@@ -57,7 +58,7 @@ namespace CodeCave.Threejs.Entities
         public IReadOnlyCollection<Geometry> Geometries
         {
             get => geometries as IReadOnlyCollection<Geometry>;
-            private set => geometries = new HashSet<Geometry>(value);
+            private set => geometries = new List<Geometry>(value);
         }
 
         [DataMember(Name = nameof(materials))]
@@ -66,7 +67,7 @@ namespace CodeCave.Threejs.Entities
         public IReadOnlyCollection<Material> Materials
         {
             get => materials as IReadOnlyCollection<Material>;
-            private set => materials = new HashSet<Material>(value);
+            private set => materials = new List<Material>(value);
         }
 
         [DataMember(Name = "object")]

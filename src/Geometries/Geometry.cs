@@ -20,7 +20,7 @@ namespace CodeCave.Threejs.Entities
     [DataContract]
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(BoxGeometry), nameof(BoxGeometry))]
-    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.GeometryConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<Geometry>))]
     public partial class Geometry : IEquatable<Geometry>
     {
         /// <summary>Initializes a new instance of the <see cref="Geometry"/> class.</summary>

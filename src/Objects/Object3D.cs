@@ -18,10 +18,10 @@ namespace CodeCave.Threejs.Entities
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]
     [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
-    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.Object3DConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<Object3D>))]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
-        private HashSet<Object3D> children;
+        private List<Object3D> children;
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
         /// <param name="type">The type of the object.</param>
@@ -31,7 +31,7 @@ namespace CodeCave.Threejs.Entities
         [JsonConstructor]
         public Object3D(string type = nameof(Object3D), string uuid = null, long? id = null)
         {
-            children = new HashSet<Object3D>();
+            children = new List<Object3D>();
 
             Id = id;
             UserData = new Dictionary<string, string>();
@@ -120,7 +120,7 @@ namespace CodeCave.Threejs.Entities
         public IReadOnlyCollection<Object3D> Children
         {
             get => children as IReadOnlyCollection<Object3D>;
-            private set => children = new HashSet<Object3D>(value);
+            private set => children = new List<Object3D>(value);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace CodeCave.Threejs.Entities
         /// <returns>Optimized object.</returns>
         public Object3D Optimize()
         {
-            children = new HashSet<Object3D>(children
+            children = new List<Object3D>(children
                 .Flatten()
                 .Where(c => !c.IsInvisible));
             return this;
@@ -276,7 +276,7 @@ namespace CodeCave.Threejs.Entities
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(Uuid);
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(GeometryUuid);
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(MaterialUuid);
-            hashCode = (hashCode * -1521134295) + EqualityComparer<HashSet<Object3D>>.Default.GetHashCode(children);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<List<Object3D>>.Default.GetHashCode(children);
             return hashCode;
         }
 

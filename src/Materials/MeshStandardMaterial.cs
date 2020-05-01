@@ -13,6 +13,12 @@ namespace CodeCave.Threejs.Entities
         {
         }
 
+        [JsonConstructor]
+        private MeshStandardMaterial()
+            : base(Guid.NewGuid().ToString())
+        {
+        }
+
         /// <summary>
         /// Gets the type of the material.
         /// </summary>
@@ -63,6 +69,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "emissive")]
         [JsonProperty("emissive")]
         [JsonPropertyName("emissive")]
-        public long Emissive { get; set; } = 2434361;
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
+        public Color Emissive { get; set; } = 2434361;
     }
 }

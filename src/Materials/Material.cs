@@ -20,7 +20,7 @@ namespace CodeCave.Threejs.Entities
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(MeshPhongMaterial), nameof(MeshPhongMaterial))]
     [JsonSubtypes.KnownSubType(typeof(MeshStandardMaterial), nameof(MeshStandardMaterial))]
-    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.MaterialConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<Material>))]
     public class Material : IEquatable<Material>, IEqualityComparer<Material>
     {
         /// <summary>Initializes a new instance of the <see cref="Material"/> class.</summary>
