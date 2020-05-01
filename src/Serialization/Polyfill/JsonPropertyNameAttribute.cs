@@ -8,6 +8,7 @@ namespace System.Text.Json.Serialization
         public JsonPropertyNameAttribute(string name)
         {
             // does nothing on .NET Framework 4.5
+            name?.ToString();
         }
     }
 }

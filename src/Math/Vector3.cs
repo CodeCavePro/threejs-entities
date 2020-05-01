@@ -114,11 +114,8 @@ namespace CodeCave.Threejs.Entities
             return $@"{X},{Y},{Z}".GetHashCode();
         }
 
-        /// <summary>
-        /// Compares to.
-        /// </summary>
-        /// <param name="other">a.</param>
-        /// <returns></returns>
+        /// <summary>Compares to.</summary>
+        /// <param name="other">The other.</param>
         [SuppressMessage("Major Code Smell", "S1121:Assignments should not be made from within sub-expressions", Justification = "It's more compact like this.")]
         public int CompareTo(Vector3 other)
         {

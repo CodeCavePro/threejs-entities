@@ -18,6 +18,7 @@ namespace CodeCave.Threejs.Entities
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]
     [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.Object3DConverter))]
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
         private HashSet<Object3D> children;
@@ -291,7 +292,7 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Returns a hash code for this instance.</summary>
         /// <param name="obj">The object.</param>
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        /// <exception cref="ArgumentNullException">obj</exception>
+        /// <exception cref="ArgumentNullException">obj is null.</exception>
         public int GetHashCode(Object3D obj)
         {
             if (obj is null)

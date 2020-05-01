@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace CodeCave.Threejs.Entities
+namespace CodeCave.Threejs.Entities.NewtonsoftJson
 {
     [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "This class is a Json.NET converter set via prop attributes")]
     internal class ColorIntConverter : JsonConverter<Color>

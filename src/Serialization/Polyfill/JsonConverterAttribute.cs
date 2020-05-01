@@ -8,6 +8,7 @@ namespace System.Text.Json.Serialization
         public JsonConverterAttribute(Type type)
         {
             // does nothing on .NET Framework 4.5
+            type?.ToString();
         }
     }
 }

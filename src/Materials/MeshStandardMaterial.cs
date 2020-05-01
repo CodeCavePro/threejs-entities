@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 namespace CodeCave.Threejs.Entities
 {
     [Serializable]
-    // [JsonConverter(typeof(MaterialConverter))]
     public class MeshStandardMaterial : Material
     {
         public MeshStandardMaterial(string uuid)
@@ -31,8 +30,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "color")]
         [JsonProperty("color")]
         [JsonPropertyName("color")]
-        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
-        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
         public Color Color { get; set; } = 11674146;
 
         /// <summary>

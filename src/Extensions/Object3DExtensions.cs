@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeCave.Threejs.Entities
@@ -11,7 +9,7 @@ namespace CodeCave.Threejs.Entities
         /// <param name="objectScene">The object scene.</param>
         /// <param name="otherScene">The other scene.</param>
         /// <param name="newPosition">The new position of merged objects after merge.</param>
-        /// <returns></returns>
+        /// <returns>Returns the modified <see cref="ObjectScene"/> with other scene merged into it. </returns>
         /// <exception cref="ArgumentNullException">objectScene
         /// or
         /// otherScene.</exception>
@@ -55,9 +53,9 @@ namespace CodeCave.Threejs.Entities
         /// <param name="depth">The depth.</param>
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
-        /// <returns></returns>
+        /// <returns>Returns the original <see cref="ObjectScene"/> with cube added into it.</returns>
         /// <exception cref="ArgumentNullException">objectScene.</exception>
-        public static Object3D AddCube(this ObjectScene objectScene, double width, double height, double depth, Vector3 position = default, int color = 11674146)
+        public static ObjectScene AddCube(this ObjectScene objectScene, double width, double height, double depth, Vector3 position = default, int color = 11674146)
         {
             if (objectScene is null)
                 throw new ArgumentNullException(nameof(objectScene));
@@ -81,10 +79,10 @@ namespace CodeCave.Threejs.Entities
             };
             objectScene.Object.AddChild(cubeObject);
 
-            return cubeObject;
+            return objectScene;
         }
 
-        internal static IEnumerable<Object3D> Flatten(this IEnumerable<Object3D> collection)
+        internal static System.Collections.Generic.IEnumerable<Object3D> Flatten(this System.Collections.Generic.IEnumerable<Object3D> collection)
         {
             foreach (var obj in collection)
             {

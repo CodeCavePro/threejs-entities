@@ -18,7 +18,6 @@ namespace CodeCave.Threejs.Entities
     /// ReSharper disable once InheritdocConsiderUsage
     [Serializable]
     [DataContract]
-    // [JsonConverter(typeof(MaterialConverter))]
     public sealed class MeshPhongMaterial : Material
     {
         public MeshPhongMaterial(string uuid)
@@ -43,8 +42,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "color")]
         [JsonProperty("color")]
         [JsonPropertyName("color")]
-        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
-        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
         public Color Color { get; set; } = 16777215;
 
         /// <summary>
@@ -56,8 +55,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "ambient")]
         [JsonProperty("ambient")]
         [JsonPropertyName("ambient")]
-        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
-        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
 
         public Color Ambient { get; set; } = 16777215;
 
@@ -71,8 +70,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "emissive")]
         [JsonProperty("emissive")]
         [JsonPropertyName("emissive")]
-        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
-        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
         public Color Emissive { get; set; } = 1;
 
         /// <summary>
@@ -85,8 +84,8 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "specular")]
         [JsonProperty("specular")]
         [JsonPropertyName("specular")]
-        [Newtonsoft.Json.JsonConverter(typeof(ColorIntConverter))]
-        [System.Text.Json.Serialization.JsonConverter(typeof(ColorIntConverterMicrosoft))]
+        [Newtonsoft.Json.JsonConverter(typeof(NewtonsoftJson.ColorIntConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.ColorIntConverter))]
         public Color Specular { get; set; } = 1118481;
 
         /// <summary>

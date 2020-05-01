@@ -20,6 +20,7 @@ namespace CodeCave.Threejs.Entities
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(MeshPhongMaterial), nameof(MeshPhongMaterial))]
     [JsonSubtypes.KnownSubType(typeof(MeshStandardMaterial), nameof(MeshStandardMaterial))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.MaterialConverter))]
     public class Material : IEquatable<Material>, IEqualityComparer<Material>
     {
         /// <summary>Initializes a new instance of the <see cref="Material"/> class.</summary>
@@ -38,7 +39,7 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
         [JsonPropertyName("uuid")]
-        public string Uuid { get; private set; }
+        public string Uuid { get; internal set; }
 
         /// <summary>
         /// Gets or sets the optional name of the object (doesn't need to be unique).

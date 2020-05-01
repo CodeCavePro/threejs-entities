@@ -1,6 +1,6 @@
-namespace CodeCave.Threejs.Entities
+namespace CodeCave.Threejs.Entities.Utf8Json
 {
-    public class ColorIntConverterMicrosoft
+    public class ColorIntConverter
 #if NET45
     {
     }
@@ -27,7 +27,7 @@ namespace CodeCave.Threejs.Entities
                 throw new System.ArgumentNullException(nameof(writer));
 
             var integerValue = (int)value;
-            writer.WriteStringValue(integerValue.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            writer.WriteNumberValue(integerValue);
         }
     }
 #endif

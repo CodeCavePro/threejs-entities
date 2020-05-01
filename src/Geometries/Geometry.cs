@@ -20,6 +20,7 @@ namespace CodeCave.Threejs.Entities
     [DataContract]
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(BoxGeometry), nameof(BoxGeometry))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.GeometryConverter))]
     public partial class Geometry : IEquatable<Geometry>
     {
         /// <summary>Initializes a new instance of the <see cref="Geometry"/> class.</summary>
@@ -47,12 +48,12 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "uuid")]
         [JsonProperty("uuid")]
         [JsonPropertyName("uuid")]
-        public string Uuid { get; private set; }
+        public string Uuid { get; internal set; }
 
         [DataMember(Name = "data")]
         [JsonProperty("data")]
         [JsonPropertyName("data")]
-        public virtual GeometryData Data { get; private set; }
+        public virtual GeometryData Data { get; internal set; }
 
         /// <summary>Adds the point to the vertices.</summary>
         /// <param name="vertex">The vertex.</param>

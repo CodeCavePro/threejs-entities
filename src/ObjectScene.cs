@@ -90,7 +90,7 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "metadata")]
         [JsonProperty("metadata")]
         [JsonPropertyName("metadata")]
-        private ObjectMetadata Metadata { get; }
+        private ObjectMetadata Metadata { get; set; }
 
         /// <summary>Adds the geometry.</summary>
         /// <param name="geometry">The geometry.</param>
