@@ -34,7 +34,7 @@ namespace CodeCave.Threejs.Entities
         /// <value>The width.</value>
         [DataMember(Name = "width")]
         [JsonProperty("width")]
-        [JsonPropertyName("type")]
+        [JsonPropertyName("width")]
         public double Width { get; set; }
 
         /// <summary>
