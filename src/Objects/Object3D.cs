@@ -251,9 +251,12 @@ namespace CodeCave.Threejs.Entities
         /// <returns>Optimized object.</returns>
         public Object3D Optimize()
         {
-            children = new List<Object3D>(children
-                .Flatten()
-                .Where(c => !c.IsInvisible));
+            children = new List<Object3D>
+            (
+                children
+                    .Flatten()
+                    .Where(c => !c.IsInvisible)
+            );
             return this;
         }
 
@@ -266,7 +269,9 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        public bool Equals(Object3D other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);
+        public bool Equals(Object3D other) => 
+            Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase) &&
+            GetHashCode().Equals(other?.GetHashCode());
 
         /// <summary>Returns a hash code for this instance.</summary>
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
