@@ -42,7 +42,8 @@ namespace CodeCave.Threejs.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectScene"/> class.
         /// </summary>
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         public ObjectScene()
         {
             Metadata = new ObjectMetadata();
@@ -149,6 +150,12 @@ namespace CodeCave.Threejs.Entities
             while (aggressive && Object.IsInvisible && (Object?.Children?.Count ?? 0) == 1)
                 Object = Object.Children.FirstOrDefault();
 
+            return this;
+        }
+
+        public ObjectScene CleanUp()
+        {
+            Object.CleanUp();
             return this;
         }
     }

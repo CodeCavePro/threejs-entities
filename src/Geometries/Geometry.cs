@@ -25,7 +25,8 @@ namespace CodeCave.Threejs.Entities
     {
         /// <summary>Initializes a new instance of the <see cref="Geometry"/> class.</summary>
         /// <param name="uuid">The UUID of this object instance.</param>
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         public Geometry(string uuid)
         {
             Uuid = uuid ?? Guid.NewGuid().ToString();
@@ -87,6 +88,11 @@ namespace CodeCave.Threejs.Entities
         public void AddFace(params int[] vertices)
         {
             Data.Faces.AddRange(vertices);
+        }
+
+        public void AddUVs(params double[] uvs)
+        {
+            Data.UVs.AddRange(uvs);
         }
 
         public override bool Equals(object obj) => obj is Geometry geometry && Equals(geometry);

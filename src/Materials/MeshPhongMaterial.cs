@@ -25,7 +25,8 @@ namespace CodeCave.Threejs.Entities
         {
         }
 
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         private MeshPhongMaterial()
             : base(Guid.NewGuid().ToString())
         {

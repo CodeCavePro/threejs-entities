@@ -28,7 +28,8 @@ namespace CodeCave.Threejs.Entities
         /// <param name="uuid">The unique identified of the object.</param>
         /// <param name="id">The identified of the object.</param>
         /// <exception cref="ArgumentException">Value cannot be null or whitespace. - type.</exception>
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         public Object3D(string type = nameof(Object3D), string uuid = null, long? id = null)
         {
             children = new List<Object3D>();
@@ -251,12 +252,19 @@ namespace CodeCave.Threejs.Entities
         /// <returns>Optimized object.</returns>
         public Object3D Optimize()
         {
-            children = new List<Object3D>
-            (
+            children = new List<Object3D>(
                 children
                     .Flatten()
-                    .Where(c => !c.IsInvisible)
-            );
+                    .Where(c => !c.IsInvisible));
+            return this;
+        }
+
+        public Object3D CleanUp()
+        {
+            children = new List<Object3D>(
+                children
+                    .Select(c => c.CleanUp())
+                    .Where(c => !c.IsInvisible));
             return this;
         }
 
@@ -269,7 +277,7 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        public bool Equals(Object3D other) => 
+        public bool Equals(Object3D other) =>
             Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase) &&
             GetHashCode().Equals(other?.GetHashCode());
 

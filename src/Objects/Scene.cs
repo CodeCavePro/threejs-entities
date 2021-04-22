@@ -21,7 +21,8 @@ namespace CodeCave.Threejs.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="Scene"/> class.</summary>
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         private Scene()
             : this(null)
         {
