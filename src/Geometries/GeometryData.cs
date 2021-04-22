@@ -12,7 +12,8 @@ namespace CodeCave.Threejs.Entities
     [DataContract]
     public class GeometryData
     {
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         internal GeometryData()
         {
         }
@@ -108,7 +109,7 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "uvs")]
         [JsonProperty("uvs")]
         [JsonPropertyName("uvs")]
-        public ICollection<double> UVs { get; set; } = new List<double>();
+        public List<double> UVs { get; set; } = new List<double>();
 
         /// <summary>
         /// Gets or sets the array of vertices (in millimeters).

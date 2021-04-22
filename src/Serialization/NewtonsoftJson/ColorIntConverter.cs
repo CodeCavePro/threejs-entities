@@ -5,9 +5,14 @@ using Newtonsoft.Json;
 namespace CodeCave.Threejs.Entities.NewtonsoftJson
 {
     [SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "This class is a Json.NET converter set via prop attributes")]
-    internal class ColorIntConverter : JsonConverter<Color>
+    internal class ColorIntConverter : JsonConverter
     {
-        public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override bool CanConvert(Type objectType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (!int.TryParse(reader?.Value?.ToString(), out var integerValue))
                 throw new NotImplementedException();
@@ -15,7 +20,7 @@ namespace CodeCave.Threejs.Entities.NewtonsoftJson
             return new Color(integerValue);
         }
 
-        public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var integerValue = (int)value;
             writer.WriteValue(integerValue);

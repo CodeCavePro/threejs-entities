@@ -89,6 +89,11 @@ namespace CodeCave.Threejs.Entities
             Data.Faces.AddRange(vertices);
         }
 
+        public void AddUVs(params double[] uvs)
+        {
+            Data.UVs.AddRange(uvs);
+        }
+
         public override bool Equals(object obj) => obj is Geometry geometry && Equals(geometry);
 
         public bool Equals(Geometry other) => Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase);

@@ -19,7 +19,8 @@ namespace CodeCave.Threejs.Entities
             Depth = depth;
         }
 
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         private BoxGeometry()
             : base(Guid.NewGuid().ToString())
         {
