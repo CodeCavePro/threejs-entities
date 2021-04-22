@@ -13,7 +13,8 @@ namespace CodeCave.Threejs.Entities
         {
         }
 
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         private MeshStandardMaterial()
             : base(Guid.NewGuid().ToString())
         {
