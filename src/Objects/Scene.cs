@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Initializes a new instance of the <see cref="Scene"/> class.</summary>
         /// <param name="uuid">The unique identified of the object.</param>
         public Scene(string uuid)
-            : base(nameof(Scene), uuid)
+            : base(nameof(Scene), uuid, id: null)
         {
         }
 
@@ -24,7 +25,7 @@ namespace CodeCave.Threejs.Entities
         [Newtonsoft.Json.JsonConstructor]
         [System.Text.Json.Serialization.JsonConstructor]
         private Scene()
-            : this(null)
+            : this(uuid: Guid.NewGuid().ToString())
         {
         }
 

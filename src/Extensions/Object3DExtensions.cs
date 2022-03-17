@@ -69,7 +69,7 @@ namespace CodeCave.Threejs.Entities
             };
             objectScene.AddMaterial(material);
 
-            var cubeObject = new Object3D("Mesh", Guid.NewGuid().ToString())
+            var cubeObject = new Object3D("Mesh", Guid.NewGuid().ToString(), id: null)
             {
                 CastShadow = true,
                 ReceiveShadow = true,
@@ -86,10 +86,16 @@ namespace CodeCave.Threejs.Entities
         {
             foreach (var obj in collection)
             {
-                if (obj.Children.Count == 0)
+                if ((obj?.Children?.Count ?? 0) == 0)
                     yield return obj;
 
-                foreach (var c in obj.Children.Flatten())
+                var children = obj?.Children?.Flatten() ??
+#if !NETFRAMEWORK
+                    Array.Empty<Object3D>();
+#else
+                    new Object3D[0];
+#endif
+                foreach (var c in children)
                     yield return c;
             }
         }

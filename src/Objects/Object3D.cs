@@ -22,6 +22,7 @@ namespace CodeCave.Threejs.Entities
     public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
     {
         private List<Object3D> children;
+        private double[] matrix;
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
         /// <param name="type">The type of the object.</param>
@@ -89,9 +90,15 @@ namespace CodeCave.Threejs.Entities
         /// The local transform matrix.
         /// </value>
         [DataMember(Name = "matrix")]
-        [JsonProperty("matrix")]
+        [JsonProperty("matrix", ObjectCreationHandling = ObjectCreationHandling.Replace)]
         [JsonPropertyName("matrix")]
-        public ICollection<double> Matrix => new[]
+        public double[] Matrix
+        {
+            get => matrix ?? (matrix = DefaultMatrix);
+            private set => matrix = value ?? DefaultMatrix;
+        }
+
+        public double[] DefaultMatrix => new[]
         {
             Scale?.X ?? 1D, 0D, 0D, 0D, // TODO implement rotation, quaternion
             0D, Scale?.Y ?? 1D, 0D, 0D,

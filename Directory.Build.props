@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <NetStandardVersion>netstandard2.1</NetStandardVersion>
     <NetCoreAppVersion>netcoreapp3.1</NetCoreAppVersion>
   </PropertyGroup>

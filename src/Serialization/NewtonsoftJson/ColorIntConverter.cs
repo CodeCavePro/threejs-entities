@@ -22,8 +22,10 @@ namespace CodeCave.Threejs.Entities.NewtonsoftJson
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var integerValue = (int)value;
-            writer.WriteValue(integerValue);
+            if (value is not Color)
+                throw new NotImplementedException();
+
+            writer.WriteValue(((Color)value).ToInt32());
         }
     }
 }

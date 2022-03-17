@@ -10,21 +10,13 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <Version>0.7.0</Version>
-    <FileVersion>0.7.0</FileVersion>
-    <AssemblyVersion>0.7.0</AssemblyVersion>
+    <Version>0.7.2</Version>
+    <FileVersion>0.7.2</FileVersion>
+    <AssemblyVersion>0.7.2</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/CodeCavePro/threejs-entities.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CodeCavePro/threejs-entities.git</RepositoryUrl>
     <PackageTags>nuget, package, library, three.js, revit, export</PackageTags>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

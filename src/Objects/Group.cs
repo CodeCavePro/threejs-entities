@@ -5,7 +5,7 @@ namespace CodeCave.Threejs.Entities
     public class Group : Object3D
     {
         public Group(string uuid = null)
-            : base(nameof(Group), uuid)
+            : base(nameof(Group), uuid, id: null)
         {
         }
     }

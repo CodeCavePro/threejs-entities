@@ -56,7 +56,7 @@ namespace CodeCave.Threejs.Entities
         [JsonPropertyName("data")]
         public virtual GeometryData Data { get; internal set; }
 
-        /// <summary>Adds the point to the vertices.</summary>
+        /// <summary>Adds the point to the vertexes.</summary>
         /// <param name="vertex">The vertex.</param>
         [SuppressMessage(
             "StyleCop.CSharp.OrderingRules",
@@ -72,7 +72,7 @@ namespace CodeCave.Threejs.Entities
             Data.Vertices.Add(vertex.Z);
         }
 
-        /// <summary>Adds the point to the vertices.</summary>
+        /// <summary>Adds the point to the vertexes.</summary>
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <param name="z">The z coordinate.</param>
@@ -83,8 +83,8 @@ namespace CodeCave.Threejs.Entities
             Data.Vertices.Add(z);
         }
 
-        /// <summary>Adds a faces from its vertices.</summary>
-        /// <param name="vertices">The vertices of a face.</param>
+        /// <summary>Adds a faces from its vertexes.</summary>
+        /// <param name="vertices">The vertexes of a face.</param>
         public void AddFace(params int[] vertices)
         {
             Data.Faces.AddRange(vertices);

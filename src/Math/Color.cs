@@ -48,7 +48,8 @@ namespace CodeCave.Threejs.Entities
 
         /// <summary>Initializes a new instance of the <see cref="Color"/> class.</summary>
         /// <param name="integerValue">The integer value.</param>
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
+        [System.Text.Json.Serialization.JsonConstructor]
         internal Color(int integerValue = 0)
         {
             this.integerValue = integerValue;
