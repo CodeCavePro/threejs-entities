@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>net6.0;net5.0;netstandard2.0;net45</TargetFrameworks>
     <OutputType>library</OutputType>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <!-- Multiple targets can cause obj folder locking by concurrent builds -->
@@ -10,9 +10,9 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <Version>0.7.2</Version>
-    <FileVersion>0.7.2</FileVersion>
-    <AssemblyVersion>0.7.2</AssemblyVersion>
+    <Version>0.7.3</Version>
+    <FileVersion>0.7.3</FileVersion>
+    <AssemblyVersion>0.7.3</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/CodeCavePro/threejs-entities.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CodeCavePro/threejs-entities.git</RepositoryUrl>
@@ -22,7 +22,9 @@
   <ItemGroup>
     <PackageReference Include="JsonSubTypes" Version="1.8.*" />
     <PackageReference Include="Newtonsoft.Json" Version="[10.0.1, 12.1)" />
-    <PackageReference Include="System.Text.Json" Version="5.0.*" Condition="'$(TargetFramework)' != 'net45'" />
+    <PackageReference Include="System.Text.Json" Version="3.1.*" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="System.Text.Json" Version="5.0.*" Condition="'$(TargetFramework)' == 'net5.0'" />
+    <PackageReference Include="System.Text.Json" Version="6.0.*" Condition="'$(TargetFramework)' == 'net6.0'" />
   </ItemGroup>
 
 </Project>
