@@ -10,9 +10,9 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <Version>0.7.3</Version>
-    <FileVersion>0.7.3</FileVersion>
-    <AssemblyVersion>0.7.3</AssemblyVersion>
+    <Version>0.7.4</Version>
+    <FileVersion>0.7.4</FileVersion>
+    <AssemblyVersion>0.7.4</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/CodeCavePro/threejs-entities.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CodeCavePro/threejs-entities.git</RepositoryUrl>
