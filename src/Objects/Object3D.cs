@@ -23,6 +23,7 @@ namespace CodeCave.Threejs.Entities
     {
         private List<Object3D> children;
         private double[] matrix;
+        private Vector3 position = new Vector3(0, 0, 0);
 
         /// <summary>Initializes a new instance of the <see cref="Object3D"/> class.</summary>
         /// <param name="type">The type of the object.</param>
@@ -207,7 +208,15 @@ namespace CodeCave.Threejs.Entities
         [DataMember(Name = "position")]
         [JsonProperty("position")]
         [JsonPropertyName("position")]
-        public Vector3 Position { get; set; } = new Vector3(0, 0, 0);
+        public Vector3 Position
+        {
+            get => position;
+            set
+            {
+                position = value;
+                matrix = null;
+            }
+        }
 
         /// <summary>Gets or sets the object's local scale.</summary>
         /// <value>The object's local scale.</value>
