@@ -19,9 +19,9 @@ namespace CodeCave.Threejs.Entities
     [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]
     [JsonSubtypes.KnownSubType(typeof(Group), nameof(Group))]
     [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<Object3D>))]
-    public class Object3D : IEquatable<Object3D>, IEqualityComparer<Object3D>
+    public class Object3D : IEquatable<Object3D>
     {
-        private List<Object3D> children;
+        private HashSet<Object3D> children;
         private double[] matrix;
         private Vector3 position = new Vector3(0, 0, 0);
 
@@ -34,7 +34,7 @@ namespace CodeCave.Threejs.Entities
         [System.Text.Json.Serialization.JsonConstructor]
         public Object3D(string type = nameof(Object3D), string uuid = null, long? id = null)
         {
-            children = new List<Object3D>();
+            children = new HashSet<Object3D>();
 
             Id = id;
             UserData = new Dictionary<string, string>();
@@ -129,7 +129,7 @@ namespace CodeCave.Threejs.Entities
         public IReadOnlyCollection<Object3D> Children
         {
             get => children as IReadOnlyCollection<Object3D>;
-            private set => children = new List<Object3D>(value);
+            private set => children = new HashSet<Object3D>(value);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace CodeCave.Threejs.Entities
         /// <returns>Optimized object.</returns>
         public Object3D Optimize()
         {
-            children = new List<Object3D>(
+            children = new HashSet<Object3D>(
                 children
                     .Flatten()
                     .Where(c => !c.IsInvisible));
@@ -277,7 +277,7 @@ namespace CodeCave.Threejs.Entities
 
         public Object3D CleanUp()
         {
-            children = new List<Object3D>(
+            children = new HashSet<Object3D>(
                 children
                     .Select(c => c.CleanUp())
                     .Where(c => !c.IsInvisible));
@@ -295,6 +295,7 @@ namespace CodeCave.Threejs.Entities
         /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
         public bool Equals(Object3D other) =>
             Uuid.Equals(other?.Uuid, StringComparison.OrdinalIgnoreCase) &&
+            Position.Equals(other?.Position) &&
             GetHashCode().Equals(other?.GetHashCode());
 
         /// <summary>Returns a hash code for this instance.</summary>
@@ -305,7 +306,8 @@ namespace CodeCave.Threejs.Entities
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(Uuid);
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(GeometryUuid);
             hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(MaterialUuid);
-            hashCode = (hashCode * -1521134295) + EqualityComparer<List<Object3D>>.Default.GetHashCode(children);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<Vector3>.Default.GetHashCode(Position);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<HashSet<Object3D>>.Default.GetHashCode(children);
             return hashCode;
         }
 
@@ -313,10 +315,7 @@ namespace CodeCave.Threejs.Entities
         /// <param name="x">The first <see cref="Object3D" /> object to compare.</param>
         /// <param name="y">The second <see cref="Object3D" /> object to compare.</param>
         /// <returns>true if the specified objects are equal; otherwise, false.</returns>
-        public bool Equals(Object3D x, Object3D y)
-        {
-            return x?.Equals(y) ?? false;
-        }
+        public static bool Equals(Object3D x, Object3D y) => x?.Equals(y) ?? false;
 
         /// <summary>Returns a hash code for this instance.</summary>
         /// <param name="obj">The object.</param>
