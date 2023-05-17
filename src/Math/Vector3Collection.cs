@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CodeCave.Threejs.Entities
 {
+    [Serializable]
     public sealed class Vector3Collection : IEnumerable<Vector3>
     {
         private readonly IDictionary<Vector3, int> vertices = new Dictionary<Vector3, int>();

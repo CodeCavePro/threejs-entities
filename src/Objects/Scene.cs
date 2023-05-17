@@ -12,6 +12,7 @@ namespace CodeCave.Threejs.Entities
     /// <seealso cref="Object3D" />
     // TODO implement environment https://threejs.org/docs/#api/en/scenes/Scene.environment
     // TODO implement fog https://threejs.org/docs/#api/en/scenes/Scene.fog
+    [Serializable]
     public class Scene : Object3D
     {
         /// <summary>Initializes a new instance of the <see cref="Scene"/> class.</summary>

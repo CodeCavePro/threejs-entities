@@ -12,9 +12,9 @@
     <IsPackable>true</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>    
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>0.8.2</Version>
-    <FileVersion>0.8.2</FileVersion>
-    <AssemblyVersion>0.8.2</AssemblyVersion>
+    <Version>0.8.3</Version>
+    <FileVersion>0.8.3</FileVersion>
+    <AssemblyVersion>0.8.3</AssemblyVersion>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/CodeCavePro/threejs-entities.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CodeCavePro/threejs-entities.git</RepositoryUrl>

@@ -14,6 +14,7 @@ namespace CodeCave.Threejs.Entities
     /// Note that this can be used for grouping objects via the .add( object ) method
     /// which adds the object as a child, however it is better to use Group for this.
     /// </summary>
+    [Serializable]
     [DataContract]
     [Newtonsoft.Json.JsonConverter(typeof(JsonSubtypes), nameof(Type))]
     [JsonSubtypes.KnownSubType(typeof(Scene), nameof(Scene))]

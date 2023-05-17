@@ -12,6 +12,7 @@ namespace CodeCave.Threejs.Entities
     /// Implements some of the specs of Three.js JSON Object/Scene format.
     /// More info here: https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4.
     /// </summary>
+    [Serializable]
     [DataContract]
     [System.Text.Json.Serialization.JsonConverter(typeof(Utf8Json.PolymorphicJsonConverter<ObjectScene>))]
     public sealed class ObjectScene

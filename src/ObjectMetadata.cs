@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
 {
+    [Serializable]
     [DataContract]
     public class ObjectMetadata
     {

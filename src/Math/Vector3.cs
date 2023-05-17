@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace CodeCave.Threejs.Entities
 {
+    [Serializable]
     public sealed class Vector3 : IEquatable<Vector3>, IComparable<Vector3>
     {
         /// <summary>
