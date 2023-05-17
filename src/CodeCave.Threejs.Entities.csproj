@@ -10,7 +10,8 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <IncludeSymbols>true</IncludeSymbols>    
+    <IncludeSymbols>true</IncludeSymbols>
+    <DebugType>embedded</DebugType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>0.8.3</Version>
     <FileVersion>0.8.3</FileVersion>

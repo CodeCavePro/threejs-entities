@@ -253,7 +253,7 @@ namespace CodeCave.Threejs.Entities
         /// <summary>Determines whether this object has a child with given UUID.</summary>
         /// <param name="uuid">The UUID of the child object.</param>
         /// <returns>
-        ///   <c>true</c> if thethis object contains has a child with given UUID; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if the object contains has a child with given UUID; otherwise, <c>false</c>.</returns>
         public bool HasChild(string uuid) => children.Any(c => c.Uuid.Equals(uuid, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>Determines whether the specified child object has child.</summary>
